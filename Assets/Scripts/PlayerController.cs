@@ -24,9 +24,14 @@ public class PlayerController : MonoBehaviour
     {
         if (CurrentPlaceable != null)
         {
+            Vector3 offset = Vector3.zero;
+            if (CurrentPlaceable.TryGetComponent(out Placeable placeable))
+            {
+                offset = placeable.GetLocalPivotPosition(_placementGrid.cellSize);
+            }
             Instantiate(
                 CurrentPlaceable,
-                _currentPointerPosition,
+                _currentPointerPosition - offset,
                 Quaternion.identity);
         }
     }
