@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -39,6 +38,33 @@ public class ShootAbility : MonoBehaviour
         Assert.IsNotNull(_bulletPrefab, "BulletPrefab must be non-null.");
         Assert.IsNotNull(_bulletPrefab.GetComponent<Rigidbody2D>(),
             "BulletPrefab must have a Rigidbody2D component");
+
+        GameObject rangeObject = Instantiate(_shootRangePrefab, transform);
+
+        // The range is a radius and the scale is effectively the diameter,
+        // so set the scale to double the range.
+        rangeObject.transform.localScale = new Vector3(
+            _range * 2.0f, _range * 2.0f, 1.0f);
+
+        // TriggerCallback does not require prior configuration, so if it's
+        // missing, we can just add it.
+        TriggerCallback triggerCallback = null;
+        if (!rangeObject.TryGetComponent(out triggerCallback))
+        {
+            triggerCallback = rangeObject.AddComponent<TriggerCallback>();
+        }
+        triggerCallback.TriggerEntered += HandleTriggerEntered;
+        triggerCallback.TriggerExited += HandleTriggerExited;
+    }
+
+    private void HandleTriggerEntered(object sender, Collider2D other)
+    {
+        Debug.Log($"Trigger entered: {other.name}");
+    }
+
+    private void HandleTriggerExited(object sender, Collider2D other)
+    {
+
     }
 
     private void Update()
