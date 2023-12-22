@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8685273228383334234}
   - component: {fileID: 5376228282349939257}
   - component: {fileID: 3935748883868693169}
+  - component: {fileID: 6168723751851848030}
   m_Layer: 0
   m_Name: StructurePortal
   m_TagString: Untagged
@@ -162,3 +163,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &6168723751851848030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5905383603769752869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb133377ed256604da26675bf838941b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
