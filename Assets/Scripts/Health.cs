@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float _maxHealth = 10.0f;
+
+    [SerializeField]
+    private UnityEvent _healthDepleted;
+    public UnityEvent HealthDepleted => _healthDepleted;
+
+    private float _currentHealth;
+
+    public void TakeDamage(float attackPower)
     {
-        
+        _currentHealth -= attackPower;
+        if (_currentHealth <= 0.0f)
+        {
+            _healthDepleted.Invoke();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _currentHealth = _maxHealth;
     }
 }
