@@ -14,6 +14,10 @@ public class ShootAbility : MonoBehaviour
     private GameObject _bulletPrefab;
 
     [SerializeField]
+    [Tooltip("Child object spawned on awake that displays the connector's range and provides a collider for checking proximity to other connectors.")]
+    private GameObject _shootRangePrefab;
+
+    [SerializeField]
     [Tooltip("Time in seconds between uses of this ability.")]
     private float _cooldown = 5.0f;
 
