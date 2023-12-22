@@ -20,6 +20,20 @@ public class Connector : MonoBehaviour
 
     private ContactFilter2D _connectorFilter;
 
+    /// <summary>
+    /// Whether this Connector can still make more connections.
+    /// </summary>
+    public bool CanConnect()
+    {
+        return _connectedObjects.Count < _maxConnections;
+    }
+
+    /// <summary>
+    /// Connect this Connector to <paramref name="other"/> (and vice versa).
+    /// 
+    /// No checks are performed in this method; the caller is expected to
+    /// perform them before calling this method.
+    /// </summary>
     public void Connect(Connector other)
     {
         _connectedObjects.Add(other);
@@ -48,18 +62,14 @@ public class Connector : MonoBehaviour
         _rangeCollider.OverlapCollider(_connectorFilter, neighbors);
 
         IEnumerable<Connector> connections = neighbors
-            .OrderBy(SqrDistanceToOther)
             .Select(c => c.GetComponentInParent<Connector>())
+            .Where(c => c.CanConnect())
+            .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
             .Take(_maxConnections);
 
         foreach (Connector connector in connections)
         {
             Connect(connector);
         }
-    }
-
-    private float SqrDistanceToOther(Collider2D other)
-    {
-        return (transform.position - other.transform.position).sqrMagnitude;
     }
 }
