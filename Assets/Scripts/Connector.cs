@@ -15,6 +15,10 @@ public class Connector : MonoBehaviour
     [Tooltip("Child object spawned on awake that displays the connector's range and provides a collider for checking proximity to other connectors.")]
     private GameObject _rangePrefab;
 
+    [SerializeField]
+    [Tooltip("Child object spawned on awake that displays a line between connected objects.")]
+    private GameObject _linePrefab;
+
     private Collider2D _rangeCollider;
     private HashSet<Connector> _connectedObjects = new HashSet<Connector>();
 
