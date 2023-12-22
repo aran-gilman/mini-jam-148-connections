@@ -27,7 +27,7 @@ public class DamageInstance : MonoBehaviour
             return;
         }
 
-        Debug.Log("Hit a target!");
+        otherHealth.TakeDamage(_attackPower);
 
         // TODO: Disable instead of destroying and set up object pooling.
         Destroy(gameObject);
