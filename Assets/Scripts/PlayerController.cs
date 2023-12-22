@@ -12,28 +12,40 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Grid _placementGrid;
 
+    [SerializeField]
+    private GameObject _positionPreviewPrefab;
+
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
+
+    private GameObject _positionPreviewObject;
 
     private void OnPlaceStructure()
     {
         if (CurrentPlaceable != null)
         {
-            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(_currentPointerPosition);
-            worldPos.z = 0;
-            Instantiate(CurrentPlaceable, SnapToGrid(worldPos), Quaternion.identity);
+            Instantiate(
+                CurrentPlaceable,
+                _currentPointerPosition,
+                Quaternion.identity);
         }
     }
 
     private void OnPointWorld(InputValue value)
     {
-        _currentPointerPosition = value.Get<Vector2>();
+        Vector3 screenPos = value.Get<Vector2>();
+        _currentPointerPosition = _mainCamera.ScreenToWorldPoint(screenPos);
+        _currentPointerPosition.z = 0;
+        _currentPointerPosition = SnapToGrid(_currentPointerPosition);
+        _positionPreviewObject.transform.position = _currentPointerPosition;
     }
 
     private void Awake()
     {
         // We cache this to avoid the cost of looking up the camera every time.
         _mainCamera = Camera.main;
+        _positionPreviewObject = Instantiate(_positionPreviewPrefab, transform);
+        _positionPreviewObject.transform.localScale = _placementGrid.cellSize;
     }
 
     private Vector3 SnapToGrid(Vector3 worldPosition)

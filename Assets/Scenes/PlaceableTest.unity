@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentPlaceable: {fileID: 0}
   _placementGrid: {fileID: 8648225845051710068}
+  _positionPreviewPrefab: {fileID: 508765320176359393, guid: e20a97eed8217a74e9827f8ff2bcef4d, type: 3}
 --- !u!156049354 &8648225845051710068
 Grid:
   m_ObjectHideFlags: 0
