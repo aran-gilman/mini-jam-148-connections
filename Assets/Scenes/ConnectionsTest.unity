@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxConnections: 2
-  _connectionRange: 1
+  _connectionRange: 5
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
 --- !u!212 &252059057
 SpriteRenderer:
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxConnections: 2
-  _connectionRange: 1
+  _connectionRange: 5
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
 --- !u!212 &690658021
 SpriteRenderer:

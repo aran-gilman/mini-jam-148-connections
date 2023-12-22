@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -14,6 +16,9 @@ public class Connector : MonoBehaviour
     private GameObject _rangePrefab;
 
     private Collider2D _rangeCollider;
+    private List<Connector> _connectedObjects = new List<Connector>();
+
+    private ContactFilter2D _connectorFilter;
 
     private void Awake()
     {
@@ -26,5 +31,24 @@ public class Connector : MonoBehaviour
         // so set the scale to double the range.
         go.transform.localScale = new Vector3(
             _connectionRange * 2.0f, _connectionRange * 2.0f, 1.0f);
+
+        // TODO: Restrict filtering to just connector layer
+        _connectorFilter = _connectorFilter.NoFilter();
+    }
+
+    private void OnEnable()
+    {
+        List<Collider2D> neighbors = new List<Collider2D>();
+        _rangeCollider.OverlapCollider(_connectorFilter, neighbors);
+        _connectedObjects = neighbors
+            .OrderBy(SqrDistanceToOther)
+            .Select(c => c.GetComponentInParent<Connector>())
+            .Take(_maxConnections)
+            .ToList();
+    }
+
+    private float SqrDistanceToOther(Collider2D other)
+    {
+        return (transform.position - other.transform.position).sqrMagnitude;
     }
 }
