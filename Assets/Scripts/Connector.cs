@@ -20,7 +20,7 @@ public class Connector : MonoBehaviour
     private GameObject _linePrefab;
 
     private Collider2D _rangeCollider;
-    private HashSet<Connector> _connectedObjects = new HashSet<Connector>();
+    private Dictionary<Connector, LineRenderer> _connectedObjects = new Dictionary<Connector, LineRenderer>();
 
     private ContactFilter2D _connectorFilter;
 
@@ -35,13 +35,25 @@ public class Connector : MonoBehaviour
     /// <summary>
     /// Connect this Connector to <paramref name="other"/> (and vice versa).
     /// 
-    /// No checks are performed in this method; the caller is expected to
-    /// perform them before calling this method.
+    /// The only check performed by this method is whether the objects are
+    /// already connected to each other. Any additional checks for validity
+    /// must be done by the caller before calling this method.
     /// </summary>
     public void Connect(Connector other)
     {
-        _connectedObjects.Add(other);
-        other._connectedObjects.Add(this);
+        if (_connectedObjects.TryAdd(other, null) &&
+            other._connectedObjects.TryAdd(this, null))
+        {
+            LineRenderer line = Instantiate(
+                _linePrefab, transform.position, Quaternion.identity)
+                .GetComponent<LineRenderer>();
+            _connectedObjects[other] = line;
+            other._connectedObjects[this] = line;
+
+            line.useWorldSpace = true;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(line.positionCount - 1, other.transform.position);
+        }
     }
 
     private void Awake()
