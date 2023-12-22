@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,6 +22,11 @@ public class ShootAbility : MonoBehaviour
     private float _cooldown = 5.0f;
 
     private float _currentRemainingCooldown = 0.0f;
+
+    private List<Transform> _targetsInRange = new List<Transform>();
+
+    private FactionAlignment _selfFactionAlignment;
+    private Health _selfHealth;
 
     private void Shoot()
     {
@@ -55,16 +61,43 @@ public class ShootAbility : MonoBehaviour
         }
         triggerCallback.TriggerEntered += HandleTriggerEntered;
         triggerCallback.TriggerExited += HandleTriggerExited;
+
+        _selfFactionAlignment = GetComponentInParent<FactionAlignment>();
+        _selfHealth = GetComponentInParent<Health>();
     }
 
     private void HandleTriggerEntered(object sender, Collider2D other)
     {
-        Debug.Log($"Trigger entered: {other.name}");
+        // Only target objects that have health.
+        // Also ignore colliders that are on the same object as this one.
+        Health otherHealth = other.GetComponentInParent<Health>();
+        if (otherHealth == null || otherHealth == _selfHealth)
+        {
+            return;
+        }
+
+        // If both this and the other object have factions, and those factions
+        // are the same, then the other object is not a valid target.
+        if (_selfFactionAlignment != null)
+        {
+            FactionAlignment otherFaction = other.GetComponentInParent<FactionAlignment>();
+            if (otherFaction != null &&
+                otherFaction.Faction == _selfFactionAlignment.Faction)
+            {
+                return;
+            }
+        }
+
+        _targetsInRange.Add(otherHealth.transform);
     }
 
     private void HandleTriggerExited(object sender, Collider2D other)
     {
-
+        Health otherHealth = other.GetComponentInParent<Health>();
+        if (otherHealth != null)
+        {
+            _targetsInRange.Remove(otherHealth.transform);
+        }
     }
 
     private void Update()
