@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 SnapToGrid(Vector3 worldPosition)
     {
-        return _placementGrid.CellToWorld(_placementGrid.WorldToCell(worldPosition));
+        return _placementGrid.CellToWorld(
+            _placementGrid.WorldToCell(worldPosition + _placementGrid.cellSize / 2));
     }
 }
