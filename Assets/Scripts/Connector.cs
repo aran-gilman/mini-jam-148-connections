@@ -11,5 +11,6 @@ public class Connector : MonoBehaviour
     private float _connectionRange = 1.0f;
 
     [SerializeField]
+    [Tooltip("Child object spawned on start that displays the connector's range and provides a collider for checking proximity to other connectors.")]
     private GameObject _rangePrefab;
 }
