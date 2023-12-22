@@ -9,9 +9,6 @@ public class ShootAbility : MonoBehaviour
     private float _range = 1.0f;
 
     [SerializeField]
-    private float _attackPower = 1.0f;
-
-    [SerializeField]
     private GameObject _bulletPrefab;
 
     [SerializeField]
@@ -43,6 +40,12 @@ public class ShootAbility : MonoBehaviour
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
         rb.velocity = (target.transform.position - bullet.transform.position).normalized;
+
+        if (_selfFactionAlignment != null &&
+            bullet.TryGetComponent(out DamageInstance damageInstance))
+        {
+            damageInstance.OwningFaction = _selfFactionAlignment.Faction;
+        }
     }
 
     private void Awake()
