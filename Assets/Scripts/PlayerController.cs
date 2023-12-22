@@ -4,14 +4,22 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
+    // TODO: We will probably want to convert this to a property to support
+    // callbacks when this changes, but leave it as a public variable for now
+    // to better support testing via the inspector.
+    public GameObject CurrentPlaceable;
+
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
 
     private void OnPlaceStructure()
     {
-        Vector3 worldPos = _mainCamera.ScreenToWorldPoint(_currentPointerPosition);
-        worldPos.z = 0;
-        Debug.Log($"OnPlaceStructure() called at position {worldPos}");
+        if (CurrentPlaceable != null)
+        {
+            Vector3 worldPos = _mainCamera.ScreenToWorldPoint(_currentPointerPosition);
+            worldPos.z = 0;
+            Instantiate(CurrentPlaceable, worldPos, Quaternion.identity);
+        }
     }
 
     private void OnPointWorld(InputValue value)
