@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     // TODO: We will probably want to convert this to a property to support
     // callbacks when this changes, but leave it as a public variable for now
     // to better support testing via the inspector.
-    public GameObject CurrentPlaceable;
+    private GameObject CurrentPlaceable;
 
     [SerializeField]
     private Grid _placementGrid;
@@ -57,5 +57,17 @@ public class PlayerController : MonoBehaviour
     {
         return _placementGrid.CellToWorld(
             _placementGrid.WorldToCell(worldPosition + _placementGrid.cellSize / 2));
+    }
+
+    public void SetOrResetCurrentPlaceable(GameObject newPlaceable = null)
+    {
+        if (CurrentPlaceable == newPlaceable)
+        {
+            CurrentPlaceable = null;
+        }
+        else
+        {
+            CurrentPlaceable = newPlaceable;
+        }
     }
 }
