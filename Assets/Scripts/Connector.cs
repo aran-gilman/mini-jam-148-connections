@@ -16,9 +16,15 @@ public class Connector : MonoBehaviour
     private GameObject _rangePrefab;
 
     private Collider2D _rangeCollider;
-    private List<Connector> _connectedObjects = new List<Connector>();
+    private HashSet<Connector> _connectedObjects = new HashSet<Connector>();
 
     private ContactFilter2D _connectorFilter;
+
+    public void Connect(Connector other)
+    {
+        _connectedObjects.Add(other);
+        other._connectedObjects.Add(this);
+    }
 
     private void Awake()
     {
@@ -40,11 +46,16 @@ public class Connector : MonoBehaviour
     {
         List<Collider2D> neighbors = new List<Collider2D>();
         _rangeCollider.OverlapCollider(_connectorFilter, neighbors);
-        _connectedObjects = neighbors
+
+        IEnumerable<Connector> connections = neighbors
             .OrderBy(SqrDistanceToOther)
             .Select(c => c.GetComponentInParent<Connector>())
-            .Take(_maxConnections)
-            .ToList();
+            .Take(_maxConnections);
+
+        foreach (Connector connector in connections)
+        {
+            Connect(connector);
+        }
     }
 
     private float SqrDistanceToOther(Collider2D other)
