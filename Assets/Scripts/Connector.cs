@@ -19,6 +19,10 @@ public class Connector : MonoBehaviour
     [Tooltip("Child object spawned on awake that displays a line between connected objects.")]
     private GameObject _linePrefab;
 
+    [SerializeField]
+    [Tooltip("Layer(s) to check for other connector colliders.")]
+    private LayerMask _connectorLayers;
+
     private Collider2D _rangeCollider;
     private Dictionary<Connector, LineRenderer> _connectedObjects = new Dictionary<Connector, LineRenderer>();
 
@@ -84,8 +88,8 @@ public class Connector : MonoBehaviour
         go.transform.localScale = new Vector3(
             _connectionRange * 2.0f, _connectionRange * 2.0f, 1.0f);
 
-        // TODO: Restrict filtering to just connector layer
-        _connectorFilter = _connectorFilter.NoFilter();
+        _connectorFilter.SetLayerMask(_connectorLayers);
+        _connectorFilter.useTriggers = true;
     }
 
     private void OnEnable()
@@ -95,7 +99,7 @@ public class Connector : MonoBehaviour
 
         IEnumerable<Connector> connections = neighbors
             .Select(c => c.GetComponentInParent<Connector>())
-            .Where(c => c.CanConnect())
+            .Where(c => c != null && c.CanConnect())
             .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
             .Take(_maxConnections);
 
