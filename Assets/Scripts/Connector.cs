@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -56,6 +57,19 @@ public class Connector : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Disconnects this Connector from <paramref name="other"/> (and vice versa).
+    /// </summary>
+    public void Disconnect(Connector other)
+    {
+        if (_connectedObjects.TryGetValue(other, out LineRenderer line))
+        {
+            _connectedObjects.Remove(other);
+            other._connectedObjects.Remove(this);
+            Destroy(line.gameObject);
+        }
+    }
+
     private void Awake()
     {
         Assert.IsNotNull(_rangePrefab, "RangePrefab must be non-null.");
@@ -86,6 +100,15 @@ public class Connector : MonoBehaviour
         foreach (Connector connector in connections)
         {
             Connect(connector);
+        }
+    }
+
+    private void OnDisable()
+    {
+        List<Connector> connections = new List<Connector>(_connectedObjects.Keys);
+        foreach (Connector other in connections)
+        {
+            Disconnect(other);
         }
     }
 }
