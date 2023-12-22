@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     // to better support testing via the inspector.
     public GameObject CurrentPlaceable;
 
+    [SerializeField]
+    private Grid _placementGrid;
+
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
 
@@ -18,7 +21,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 worldPos = _mainCamera.ScreenToWorldPoint(_currentPointerPosition);
             worldPos.z = 0;
-            Instantiate(CurrentPlaceable, worldPos, Quaternion.identity);
+            Instantiate(CurrentPlaceable, SnapToGrid(worldPos), Quaternion.identity);
         }
     }
 
@@ -31,5 +34,10 @@ public class PlayerController : MonoBehaviour
     {
         // We cache this to avoid the cost of looking up the camera every time.
         _mainCamera = Camera.main;
+    }
+
+    private Vector3 SnapToGrid(Vector3 worldPosition)
+    {
+        return _placementGrid.CellToWorld(_placementGrid.WorldToCell(worldPosition));
     }
 }
