@@ -9,4 +9,7 @@ public class Connector : MonoBehaviour
 
     [SerializeField]
     private float _connectionRange = 1.0f;
+
+    [SerializeField]
+    private GameObject _rangePrefab;
 }
