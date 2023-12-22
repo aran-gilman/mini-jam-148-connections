@@ -65,7 +65,10 @@ public class Connector : MonoBehaviour
         {
             _connectedObjects.Remove(other);
             other._connectedObjects.Remove(this);
-            Destroy(line.gameObject);
+            if (line != null)
+            {
+                Destroy(line.gameObject);
+            }
         }
     }
 
