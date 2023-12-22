@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Placeable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    [Tooltip("Size of the placeable in tiles.")]
+    private Vector2Int _size;
+    public Vector2Int Size => _size;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    [Tooltip("Which tile is the pivot, with (0, 0) being the bottom left.")]
+    private Vector2Int _pivot;
+    public Vector2Int Pivot => _pivot;
 }
