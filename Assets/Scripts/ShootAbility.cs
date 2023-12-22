@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -28,15 +29,20 @@ public class ShootAbility : MonoBehaviour
     private FactionAlignment _selfFactionAlignment;
     private Health _selfHealth;
 
-    private void Shoot()
+    private Transform FindTarget()
+    {
+        return _targetsInRange
+            .OrderBy(t => (transform.position - t.position).sqrMagnitude)
+            .FirstOrDefault();
+    }
+
+    private void Shoot(Transform target)
     {
         GameObject bullet = Instantiate(
             _bulletPrefab, transform.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-        // TODO: Replace placeholder with velocity based on speed & target
-        // direction
-        rb.velocity = Vector2.up;
+        rb.velocity = (target.transform.position - bullet.transform.position).normalized;
     }
 
     private void Awake()
@@ -102,11 +108,18 @@ public class ShootAbility : MonoBehaviour
 
     private void Update()
     {
-        _currentRemainingCooldown -= Time.deltaTime;
         if (_currentRemainingCooldown <= 0.0f)
         {
-            Shoot();
-            _currentRemainingCooldown = _cooldown;
+            Transform target = FindTarget();
+            if (target != null)
+            {
+                Shoot(target);
+                _currentRemainingCooldown = _cooldown;
+            }
+        }
+        else
+        {
+            _currentRemainingCooldown -= Time.deltaTime;
         }
     }
 }
