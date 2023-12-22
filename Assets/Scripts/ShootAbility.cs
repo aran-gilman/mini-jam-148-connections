@@ -9,6 +9,9 @@ public class ShootAbility : MonoBehaviour
     private float _attackPower = 1.0f;
 
     [SerializeField]
+    private GameObject _bulletPrefab;
+
+    [SerializeField]
     [Tooltip("Time in seconds between uses of this ability.")]
     private float _cooldown = 5.0f;
 }
