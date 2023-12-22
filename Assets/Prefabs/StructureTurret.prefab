@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1320402555794411780}
   - component: {fileID: 6261610180625566899}
   - component: {fileID: 2371234083663546685}
+  - component: {fileID: 8817741468547869393}
   m_Layer: 0
   m_Name: StructureTurret
   m_TagString: Untagged
@@ -101,3 +102,15 @@ MonoBehaviour:
   _connectionRange: 1
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}
+--- !u!114 &8817741468547869393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574654826809178677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ec3e33d0e8b7c40bb58bb35e935ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
