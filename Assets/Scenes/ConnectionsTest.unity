@@ -157,6 +157,9 @@ MonoBehaviour:
   _connectionRange: 5
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}
+  _connectorLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!212 &252059057
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -258,6 +261,9 @@ MonoBehaviour:
   _connectionRange: 5
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}
+  _connectorLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!212 &690658021
 SpriteRenderer:
   m_ObjectHideFlags: 0
