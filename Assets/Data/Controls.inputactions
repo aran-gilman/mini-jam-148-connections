@@ -2,7 +2,7 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "Player",
+            "name": "Place Mode",
             "id": "cce05b26-7852-473e-b772-9a9efe7b4e5f",
             "actions": [
                 {
