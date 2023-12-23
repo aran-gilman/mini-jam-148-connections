@@ -7,6 +7,10 @@ public class AIMovement : MonoBehaviour
     [SerializeField]
     private float _moveSpeed = 1.0f;
 
+    [SerializeField]
+    [Tooltip("How close the object needs to be for the algorithm to consider it as having reached the target position.")]
+    private float _targetReachedTolerance = 0.1f;
+
     public Vector3 TargetPosition { get; set; }
 
     private Rigidbody2D _rb;
@@ -50,23 +54,25 @@ public class AIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (VectorApproximately(transform.position, TargetPosition))
+        if (DidReachTarget(
+            transform.position, TargetPosition, _targetReachedTolerance))
         {
+            _rb.velocity = Vector3.zero;
             return;
         }
 
-        if (VectorApproximately(transform.position, _nextNode))
+        if (DidReachTarget(transform.position, _nextNode, _targetReachedTolerance))
         {
             _nextNode = _pathfinder.PopNextNode();
             _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
         }
     }
 
-    // TODO: Move this to a utility function file
-    private static bool VectorApproximately(Vector3 a, Vector3 b)
+    private static bool DidReachTarget(Vector3 a, Vector3 b, float epsilon)
     {
-        return Mathf.Approximately(a.x, b.x)
-            && Mathf.Approximately(a.y, b.y)
-            && Mathf.Approximately(a.z, b.z);
+        // Even though we take Vector3 as input, this is a 2D game, so we can
+        // ignore the z
+        return Mathf.Abs(a.x - b.x) < epsilon
+            && Mathf.Abs(a.y - b.y) < epsilon;
     }
 }
