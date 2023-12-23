@@ -34,6 +34,13 @@ public class AIMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
+    private void OnDisable()
+    {
+        _rb.velocity = Vector3.zero;
+        _nextNode = transform.position;
+        _targetPosition = transform.position;
+    }
+
     private void Update()
     {
         if (DidReachTarget(

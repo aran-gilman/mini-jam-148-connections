@@ -26,6 +26,11 @@ public class ShootAbility : MonoBehaviour
     private FactionAlignment _selfFactionAlignment;
     private Health _selfHealth;
 
+    public bool HasTargetsInRange()
+    {
+        return _targetsInRange.Count > 0;
+    }
+
     private Transform FindTarget()
     {
         return _targetsInRange

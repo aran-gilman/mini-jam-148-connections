@@ -44,12 +44,16 @@ public class AIController : MonoBehaviour
 
     private void Update()
     {
-        // TODO: Check if we are in range of a target and, if so, cancel any
-        // other state and attack.
-
-        // If we are not near a target and we do not have a target to move
-        // toward, find one.
-        if (_target == null)
+        // If there is a target within range, attack it.
+        if (_shootAbility.HasTargetsInRange())
+        {
+            _target = null;
+            _shootAbility.enabled = true;
+            _aiMovement.enabled = false;
+        }
+        // Otherwise, if we are not moving toward a target, find one and start
+        // moving toward it.
+        else if (_target == null)
         {
             _target = FindTarget();
             _aiMovement.enabled = true;
