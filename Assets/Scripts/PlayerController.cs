@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,13 +34,15 @@ public class PlayerController : MonoBehaviour
             Vector3 position = _currentPointerPosition;
             if (CurrentPlaceable.TryGetComponent(out Placeable placeable))
             {
+                position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
+
                 // Allow placement only if there is a Connector nearby.
-                if (!Physics2D.OverlapBox(
-                    position, placeable.Size, 0, _connectorLayer.value))
+                if (Connector
+                    .GetAvailableConnectors(position, _connectorLayer)
+                    .Count() == 0)
                 {
                     return;
                 }
-                position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
             }
             Instantiate(
                 CurrentPlaceable,
