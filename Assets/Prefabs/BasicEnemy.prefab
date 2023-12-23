@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6225939637016467638}
   - component: {fileID: 6620760358152534415}
   - component: {fileID: 4076839113311145647}
+  - component: {fileID: 5534595078932856598}
   m_Layer: 0
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -203,3 +204,16 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 4605931904304323554, guid: b160bb7e469430640951e7b9f522ef4c, type: 3}
   _shootRangePrefab: {fileID: 4204490069195673466, guid: e143bcc5a8ee7314d90b5a8117afaf7d, type: 3}
   _cooldown: 5
+--- !u!114 &5534595078932856598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039025706152942865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77750a1c49a51084fadaff80003c6d98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _faction: 1
