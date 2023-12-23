@@ -14,9 +14,18 @@ public class Placeable : MonoBehaviour
 
     public Vector3 GetLocalPivotPosition(Vector3 cellSize)
     {
-        Vector3 pivotPosition = new Vector3(
-            cellSize.x * _pivot.x,
-            cellSize.y * _pivot.y);
-        return pivotPosition + cellSize / 2;
+        float pivotX = cellSize.x * _pivot.x;
+        if (_size.x % 2 == 0)
+        {
+            pivotX += cellSize.x / 2;
+        }
+
+        float pivotY = cellSize.y * _pivot.y;
+        if (_size.y % 2 == 0)
+        {
+            pivotY += cellSize.y / 2;
+        }
+
+        return new Vector3(pivotX, pivotY);
     }
 }
