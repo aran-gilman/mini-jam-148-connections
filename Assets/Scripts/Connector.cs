@@ -12,6 +12,10 @@ public class Connector : MonoBehaviour
     private float _connectionRange = 1.0f;
 
     [SerializeField]
+    [Tooltip("Connectors that are neither sources nor transitively connected to a source will collapse.")]
+    private bool _isSource = false;
+
+    [SerializeField]
     [Tooltip("Child object spawned on awake that displays the connector's range and provides a collider for checking proximity to other connectors.")]
     private GameObject _rangePrefab;
 
@@ -63,6 +67,11 @@ public class Connector : MonoBehaviour
     /// <summary>
     /// Disconnects this Connector from <paramref name="other"/> (and vice versa).
     /// </summary>
+    /// 
+    /// <remarks>
+    /// Does not call VerifyConnection() on either Connector; this must be called
+    /// separately.
+    /// </remarks>
     public void Disconnect(Connector other)
     {
         if (_connectedObjects.TryGetValue(other, out LineRenderer line))
@@ -74,6 +83,59 @@ public class Connector : MonoBehaviour
                 Destroy(line.gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// Verifies that the Connector connects transitively to a source.
+    /// 
+    /// If it is not connected, then this Connector and all connected
+    /// Connectors are destroyed.
+    /// </summary>
+    public void VerifyConnection()
+    {
+        HashSet<Connector> openNodes = new HashSet<Connector>
+        {
+            this
+        };
+        HashSet<Connector> visited = new HashSet<Connector>();
+        if (!IsConnectedToSource(openNodes, visited))
+        {
+            foreach (Connector connector in visited)
+            {
+                Destroy(connector.gameObject);
+            }
+        }
+    }
+
+    private static bool IsConnectedToSource(
+        HashSet<Connector> openNodes,
+        HashSet<Connector> visited)
+    {
+        // Grab a node from the list of nodes to check, if one exists.
+        Connector node = openNodes.FirstOrDefault();
+
+        // If there are no nodes left to check, then we never found a source.
+        if (node == null)
+        {
+            return false;
+        }
+
+        openNodes.Remove(node);
+        visited.Add(node);
+
+        if (node._isSource)
+        {
+            return true;
+        }
+
+        // Add all connections that have not been visited yet to the set of
+        // nodes to check.
+        openNodes.UnionWith(
+            node._connectedObjects
+            .Select(n => n.Key)
+            .Where(n => !visited.Contains(n)));
+
+        return IsConnectedToSource(openNodes, visited);
     }
 
     private void Awake()
@@ -115,6 +177,14 @@ public class Connector : MonoBehaviour
         foreach (Connector other in connections)
         {
             Disconnect(other);
+        }
+
+        foreach (Connector other in connections)
+        {
+            if (other != null)
+            {
+                other.VerifyConnection();
+            }
         }
     }
 }
