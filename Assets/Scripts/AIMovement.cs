@@ -30,7 +30,7 @@ public class AIMovement : MonoBehaviour
 
     private void Awake()
     {
-        _pathfinder = new NaivePathfinder();
+        _pathfinder = new AStarPathfinder(FindObjectOfType<NavigationMap>());
         _rb = GetComponent<Rigidbody2D>();
     }
 

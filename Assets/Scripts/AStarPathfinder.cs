@@ -5,6 +5,7 @@ using UnityEngine;
 public class AStarPathfinder : IPathfinder
 {
     private Stack<Vector3> _path = new Stack<Vector3>();
+    private NavigationMap _navMap;
     private Vector3 _target;
 
     private class Node
@@ -15,12 +16,16 @@ public class AStarPathfinder : IPathfinder
         public float FScore = float.PositiveInfinity;
     }
 
+    public AStarPathfinder(NavigationMap navMap)
+    {
+        _navMap = navMap;
+    }
+
     // Derived from pseudocode at https://en.wikipedia.org/wiki/A*_search_algorithm
     public void CalculatePath(Vector3 start, Vector3 target)
     {
         _path.Clear();
-        NavigationMap navMap = Object.FindObjectOfType<NavigationMap>();
-        if (navMap == null)
+        if (_navMap == null)
         {
             return;
         }
@@ -52,7 +57,7 @@ public class AStarPathfinder : IPathfinder
             }
             openNodes.Remove(node);
 
-            foreach (Vector3 neighborPos in navMap.GetNeighbors(node.Position))
+            foreach (Vector3 neighborPos in _navMap.GetNeighbors(node.Position))
             {
                 Node neighbor = FindNode(neighborPos, allNodes);
                 if (neighbor == null)
