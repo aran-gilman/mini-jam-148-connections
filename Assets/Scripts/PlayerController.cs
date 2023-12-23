@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject _positionPreviewPrefab;
 
+    [SerializeField]
+    private LayerMask _connectorLayer;
+
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
 
@@ -30,6 +33,12 @@ public class PlayerController : MonoBehaviour
             Vector3 position = _currentPointerPosition;
             if (CurrentPlaceable.TryGetComponent(out Placeable placeable))
             {
+                // Allow placement only if there is a Connector nearby.
+                if (!Physics2D.OverlapBox(
+                    position, placeable.Size, 0, _connectorLayer.value))
+                {
+                    return;
+                }
                 position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
             }
             Instantiate(
