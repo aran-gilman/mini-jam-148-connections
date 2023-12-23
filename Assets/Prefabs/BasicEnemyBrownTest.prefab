@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 6620760358152534415}
   - component: {fileID: 4076839113311145647}
   - component: {fileID: 5534595078932856598}
-  - component: {fileID: 134399193071631748}
+  - component: {fileID: 6452240177055666323}
   m_Layer: 0
-  m_Name: BasicEnemy
+  m_Name: BasicEnemyBrownTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0b800413ab0f9844c92431891d892505, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.30863357, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   _range: 1
   _bulletPrefab: {fileID: 4605931904304323554, guid: b160bb7e469430640951e7b9f522ef4c, type: 3}
   _shootRangePrefab: {fileID: 4204490069195673466, guid: e143bcc5a8ee7314d90b5a8117afaf7d, type: 3}
-  _cooldown: 5
+  _cooldown: 1
 --- !u!114 &5534595078932856598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _faction: 1
---- !u!114 &134399193071631748
+--- !u!114 &6452240177055666323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb133377ed256604da26675bf838941b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 3
+  _maxHealth: 5
   _healthDepleted:
     m_PersistentCalls:
       m_Calls:
