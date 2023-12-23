@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxConnections: 2
-  _connectionRange: 2
+  _connectionRange: 6
   _isSource: 1
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}

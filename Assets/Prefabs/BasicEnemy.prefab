@@ -147,7 +147,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a673c41284ae548498543160256ed459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
+  _moveSpeed: 0.5
   _targetReachedTolerance: 0.1
 --- !u!114 &6620760358152534415
 MonoBehaviour:
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab64238ee9958d241a40297b23c16526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 0.75
+  _range: 0.5
   _bulletPrefab: {fileID: 4605931904304323554, guid: b160bb7e469430640951e7b9f522ef4c, type: 3}
   _shootRangePrefab: {fileID: 4204490069195673466, guid: e143bcc5a8ee7314d90b5a8117afaf7d, type: 3}
   _cooldown: 1
