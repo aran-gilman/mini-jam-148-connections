@@ -30,7 +30,7 @@ public class AIMovement : MonoBehaviour
 
     private void Awake()
     {
-        _pathfinder = new NaivePathfinder();
+        _pathfinder = new AStarPathfinder(FindObjectOfType<NavigationMap>());
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -53,8 +53,8 @@ public class AIMovement : MonoBehaviour
         if (DidReachTarget(transform.position, _nextNode, _targetReachedTolerance))
         {
             _nextNode = _pathfinder.PopNextNode();
-            _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
         }
+        _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
     }
 
     private static bool DidReachTarget(Vector3 a, Vector3 b, float epsilon)

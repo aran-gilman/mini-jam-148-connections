@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f89aef566c40f714cbcfd78494c1fbdc, type: 3}
-  m_Name: Ground
+  m_Name: Pit
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: f3cb4476d3b11c54f82d22ed01ee9f1c, type: 3}
-  _isWalkable: 1
+  _sprite: {fileID: 21300000, guid: 6da08c7584c74a940a7201bcc63d4de4, type: 3}
+  _isWalkable: 0
