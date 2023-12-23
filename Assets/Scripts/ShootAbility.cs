@@ -26,6 +26,8 @@ public class ShootAbility : MonoBehaviour
     private FactionAlignment _selfFactionAlignment;
     private Health _selfHealth;
 
+    private float _bulletSpeed = 5f;
+
     public bool HasTargetsInRange()
     {
         return _targetsInRange.Count > 0;
@@ -44,7 +46,7 @@ public class ShootAbility : MonoBehaviour
             _bulletPrefab, transform.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-        rb.velocity = (target.transform.position - bullet.transform.position).normalized;
+        rb.velocity = (target.transform.position - bullet.transform.position).normalized * _bulletSpeed;
 
         if (_selfFactionAlignment != null &&
             bullet.TryGetComponent(out DamageInstance damageInstance))

@@ -6,13 +6,9 @@ using TMPro;
 public class Shop : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> Structures = new List<GameObject>();
-    [SerializeField]
-    private List<int> Costs = new List<int>();
-    [SerializeField]
-    private List<TextMeshProUGUI> PriceTags = new List<TextMeshProUGUI>();
+    private List<ShopEntry> _entries = new List<ShopEntry>();
 
-    private int _money = 50;
+    private int _money = 1000;
     [SerializeField]
     private TextMeshProUGUI MoneyText;
 
@@ -23,9 +19,9 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        for(int i = 0; i < PriceTags.Count; i++)
+        for(int i = 0; i < _entries.Count; i++)
         {
-            PriceTags[i].text = Costs[i].ToString();
+            _entries[i].PriceTag.text = _entries[i].Cost.ToString();
         }
 
         MoneyText.text = _money.ToString();
@@ -33,30 +29,50 @@ public class Shop : MonoBehaviour
 
     public void SelectItem(int buttonID)
     {
-        if(PlayerController.GetCurrentPlaceable() == Structures[buttonID])
+        ShopEntry selectedItem = _entries[buttonID];
+
+        if(PlayerController.GetCurrentPlaceable() == selectedItem.Structure)
         {
-            currentSelection = -1;
-            PlayerController.SetCurrentPlaceable(null);
+            SwitchSelection(-1);
             return;
         }
 
-        if(_money >= Costs[buttonID])
+        if(_money >= selectedItem.Cost)
         {
-            currentSelection = buttonID;
-            PlayerController.SetCurrentPlaceable(Structures[buttonID]);
+            SwitchSelection(buttonID);
         }
     }
 
     public void BuyItem()
     {
-        _money -= Costs[currentSelection];
+        int cost = _entries[currentSelection].Cost;
+        _money -= cost;
         MoneyText.text = _money.ToString();
-        if(_money < Costs[currentSelection])
+        if(_money < cost)
         {
-            currentSelection = -1;
-            PlayerController.SetCurrentPlaceable(null);
+            SwitchSelection(-1);
         }
     }
+
+    private void SwitchSelection(int ID)
+    {
+        if (currentSelection != -1)
+        {
+            _entries[currentSelection].RegularButton.SetActive(true);
+        }
+
+        if (ID == -1)
+        {
+            PlayerController.SetCurrentPlaceable(null);
+        }
+        else
+        {
+            PlayerController.SetCurrentPlaceable(_entries[ID].Structure);
+            _entries[ID].RegularButton.SetActive(false);
+        }
+
+        currentSelection = ID;
+    }    
 
 
 }

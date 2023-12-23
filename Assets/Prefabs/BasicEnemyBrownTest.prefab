@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab64238ee9958d241a40297b23c16526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 1
+  _range: 0.75
   _bulletPrefab: {fileID: 4605931904304323554, guid: b160bb7e469430640951e7b9f522ef4c, type: 3}
   _shootRangePrefab: {fileID: 4204490069195673466, guid: e143bcc5a8ee7314d90b5a8117afaf7d, type: 3}
   _cooldown: 1

@@ -59,9 +59,9 @@ MonoBehaviour:
   - Enemy: {fileID: 1039025706152942865, guid: ad15ddec2bb554442a437b4bf8ad8207, type: 3}
     Cost: 2
     Threshold: 6
-  _pointsPerWave: 020000000400000006000000080000000a000000
-  _initialDelay: 5
-  _waveDelay: 10
+  _pointsPerWave: 0100000002000000030000000400000005000000
+  _initialDelay: 2
+  _waveDelay: 5
   _spawnCooldown: 1.5
   _numberOfTypesSpawned: 3
 --- !u!212 &375429564351429413
