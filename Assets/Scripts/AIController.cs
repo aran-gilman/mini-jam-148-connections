@@ -1,9 +1,11 @@
 using UnityEngine;
 
 [RequireComponent(typeof(AIMovement))]
+[RequireComponent(typeof(ShootAbility))]
 public class AIController : MonoBehaviour
 {
     private AIMovement _aiMovement;
+    private ShootAbility _shootAbility;
 
     private Health _target;
 
@@ -34,6 +36,10 @@ public class AIController : MonoBehaviour
     private void Awake()
     {
         _aiMovement = GetComponent<AIMovement>();
+        _shootAbility = GetComponent<ShootAbility>();
+
+        _aiMovement.enabled = false;
+        _shootAbility.enabled = false;
     }
 
     private void Update()
@@ -46,6 +52,7 @@ public class AIController : MonoBehaviour
         if (_target == null)
         {
             _target = FindTarget();
+            _aiMovement.enabled = true;
             _aiMovement.TargetPosition = _target.transform.position;
         }
     }
