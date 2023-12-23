@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class AIMovement : MonoBehaviour
 {
+    [SerializeField]
+    private float _moveSpeed = 1.0f;
+
     public Vector3 TargetPosition { get; set; }
 
     private Rigidbody2D _rb;
@@ -42,6 +45,7 @@ public class AIMovement : MonoBehaviour
         TargetPosition = FindTarget();
         _pathfinder.CalculatePath(transform.position, TargetPosition);
         _nextNode = _pathfinder.PopNextNode();
+        _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
     }
 
     private void Update()
@@ -54,6 +58,7 @@ public class AIMovement : MonoBehaviour
         if (VectorApproximately(transform.position, _nextNode))
         {
             _nextNode = _pathfinder.PopNextNode();
+            _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
         }
     }
 
