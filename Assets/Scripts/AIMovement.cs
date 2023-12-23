@@ -1,9 +1,15 @@
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class AIMovement : MonoBehaviour
 {
     public Vector3 TargetPosition { get; set; }
+
+    private Rigidbody2D _rb;
+
+    private IPathfinder _pathfinder;
+    private Vector3 _nextNode;
 
     // TODO: Move target selection to a separate class.
     // This class should only concern itself with getting the object from one
@@ -25,8 +31,37 @@ public class AIMovement : MonoBehaviour
         return target.position;
     }
 
+    private void Awake()
+    {
+        _pathfinder = new NaivePathfinder();
+        _rb = GetComponent<Rigidbody2D>();
+    }
+
     private void OnEnable()
     {
         TargetPosition = FindTarget();
+        _pathfinder.CalculatePath(transform.position, TargetPosition);
+        _nextNode = _pathfinder.PopNextNode();
+    }
+
+    private void Update()
+    {
+        if (VectorApproximately(transform.position, TargetPosition))
+        {
+            return;
+        }
+
+        if (VectorApproximately(transform.position, _nextNode))
+        {
+            _nextNode = _pathfinder.PopNextNode();
+        }
+    }
+
+    // TODO: Move this to a utility function file
+    private static bool VectorApproximately(Vector3 a, Vector3 b)
+    {
+        return Mathf.Approximately(a.x, b.x)
+            && Mathf.Approximately(a.y, b.y)
+            && Mathf.Approximately(a.z, b.z);
     }
 }
