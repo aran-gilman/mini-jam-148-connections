@@ -99,7 +99,7 @@ public class Connector : MonoBehaviour
 
         IEnumerable<Connector> connections = neighbors
             .Select(c => c.GetComponentInParent<Connector>())
-            .Where(c => c != null && c.CanConnect())
+            .Where(c => c != null && c != this && c.CanConnect())
             .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
             .Take(_maxConnections);
 

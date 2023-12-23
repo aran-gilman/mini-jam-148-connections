@@ -109,7 +109,7 @@ MonoBehaviour:
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}
   _connectorLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
 --- !u!114 &8817741468547869393
 MonoBehaviour:
   m_ObjectHideFlags: 0
