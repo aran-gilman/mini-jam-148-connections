@@ -12,6 +12,10 @@ public class Connector : MonoBehaviour
     private float _connectionRange = 1.0f;
 
     [SerializeField]
+    [Tooltip("Connectors that are neither sources nor transitively connected to a source will collapse.")]
+    private bool _isSource = false;
+
+    [SerializeField]
     [Tooltip("Child object spawned on awake that displays the connector's range and provides a collider for checking proximity to other connectors.")]
     private GameObject _rangePrefab;
 
