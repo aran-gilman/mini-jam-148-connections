@@ -31,6 +31,15 @@ public class Connector : MonoBehaviour
     private Dictionary<Connector, LineRenderer> _connectedObjects =
         new Dictionary<Connector, LineRenderer>();
 
+    public static IEnumerable<Connector> GetAvailableConnectors(
+        Vector3 position,
+        LayerMask connectorLayers)
+    {
+        return Physics2D.OverlapPointAll(position, connectorLayers.value)
+            .Select(c => c.GetComponentInParent<Connector>())
+            .Where(c => c != null && c.CanConnect());
+    }
+
     /// <summary>
     /// Whether this Connector can still make more connections.
     /// </summary>
@@ -157,9 +166,9 @@ public class Connector : MonoBehaviour
                 transform.position,
                 _connectorLayers.value));
 
-        IEnumerable<Connector> connections = neighbors
-            .Select(c => c.GetComponentInParent<Connector>())
-            .Where(c => c != null && c != this && c.CanConnect())
+        IEnumerable<Connector> connections =
+            GetAvailableConnectors(transform.position, _connectorLayers)
+            .Where(c => c != this)
             .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
             .Take(_maxConnections);
 
