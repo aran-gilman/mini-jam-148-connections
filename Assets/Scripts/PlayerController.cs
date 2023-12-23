@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private LayerMask _connectorLayer;
+
+    [SerializeField]
+    private Tilemap _terrain;
 
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
