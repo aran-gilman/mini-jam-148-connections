@@ -107,7 +107,7 @@ public class ShootAbility : MonoBehaviour
 
     private void HandleTriggerExited(object sender, Collider2D other)
     {
-        Health otherHealth = other.GetComponentInParent<Health>();
+        Health otherHealth = other.GetComponentInParent<Health>(true);
         if (otherHealth != null)
         {
             _targetsInRange.Remove(otherHealth.transform);
