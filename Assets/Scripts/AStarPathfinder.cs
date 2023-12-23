@@ -32,7 +32,7 @@ public class AStarPathfinder : IPathfinder
 
         Node startNode = new Node()
         {
-            Position = start,
+            Position = _navMap.GetNearestNode(start),
             GScore = 0,
             FScore = Heuristic(start)
         };
@@ -50,9 +50,14 @@ public class AStarPathfinder : IPathfinder
             Node node = openNodes
                 .OrderBy(n => n.FScore)
                 .FirstOrDefault();
-            if (VectorApproximately(node.Position, target))
+            if (_navMap.HasDirectRoute(node.Position, target))
             {
-                ReconstructPath(node);
+                Node targetNode = new Node()
+                {
+                    Position = target,
+                    CameFrom = node
+                };
+                ReconstructPath(targetNode);
                 return;
             }
             openNodes.Remove(node);
