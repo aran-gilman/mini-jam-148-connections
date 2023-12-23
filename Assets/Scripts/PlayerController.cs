@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject _positionPreviewPrefab;
 
+    [SerializeField]
+    private LayerMask _connectorLayer;
+
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
 
@@ -27,14 +31,22 @@ public class PlayerController : MonoBehaviour
     {
         if (CurrentPlaceable != null)
         {
-            Vector3 offset = Vector3.zero;
+            Vector3 position = _currentPointerPosition;
             if (CurrentPlaceable.TryGetComponent(out Placeable placeable))
             {
-                offset = placeable.GetLocalPivotPosition(_placementGrid.cellSize);
+                position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
+
+                // Allow placement only if there is a Connector nearby.
+                if (Connector
+                    .GetAvailableConnectors(position, _connectorLayer)
+                    .Count() == 0)
+                {
+                    return;
+                }
             }
             Instantiate(
                 CurrentPlaceable,
-                _currentPointerPosition - offset,
+                position,
                 Quaternion.identity);
             _shop.BuyItem();
         }

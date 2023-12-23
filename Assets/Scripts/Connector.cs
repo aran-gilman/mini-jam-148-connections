@@ -28,9 +28,17 @@ public class Connector : MonoBehaviour
     private LayerMask _connectorLayers;
 
     private Collider2D _rangeCollider;
-    private Dictionary<Connector, LineRenderer> _connectedObjects = new Dictionary<Connector, LineRenderer>();
+    private Dictionary<Connector, LineRenderer> _connectedObjects =
+        new Dictionary<Connector, LineRenderer>();
 
-    private ContactFilter2D _connectorFilter;
+    public static IEnumerable<Connector> GetAvailableConnectors(
+        Vector3 position,
+        LayerMask connectorLayers)
+    {
+        return Physics2D.OverlapPointAll(position, connectorLayers.value)
+            .Select(c => c.GetComponentInParent<Connector>())
+            .Where(c => c != null && c.CanConnect());
+    }
 
     /// <summary>
     /// Whether this Connector can still make more connections.
@@ -149,19 +157,18 @@ public class Connector : MonoBehaviour
         // so set the scale to double the range.
         go.transform.localScale = new Vector3(
             _connectionRange * 2.0f, _connectionRange * 2.0f, 1.0f);
-
-        _connectorFilter.SetLayerMask(_connectorLayers);
-        _connectorFilter.useTriggers = true;
     }
 
     private void OnEnable()
     {
-        List<Collider2D> neighbors = new List<Collider2D>();
-        _rangeCollider.OverlapCollider(_connectorFilter, neighbors);
+        List<Collider2D> neighbors = new List<Collider2D>(
+            Physics2D.OverlapPointAll(
+                transform.position,
+                _connectorLayers.value));
 
-        IEnumerable<Connector> connections = neighbors
-            .Select(c => c.GetComponentInParent<Connector>())
-            .Where(c => c != null && c != this && c.CanConnect())
+        IEnumerable<Connector> connections =
+            GetAvailableConnectors(transform.position, _connectorLayers)
+            .Where(c => c != this)
             .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
             .Take(_maxConnections);
 
