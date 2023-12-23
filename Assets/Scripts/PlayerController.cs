@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
 
     private GameObject _positionPreviewObject;
 
+    [SerializeField]
+    private Shop _shop;
+
     private void OnPlaceStructure()
     {
         if (CurrentPlaceable != null)
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour
                 CurrentPlaceable,
                 _currentPointerPosition - offset,
                 Quaternion.identity);
+            _shop.BuyItem();
         }
     }
 
@@ -59,15 +63,13 @@ public class PlayerController : MonoBehaviour
             _placementGrid.WorldToCell(worldPosition + _placementGrid.cellSize / 2));
     }
 
-    public void SetOrResetCurrentPlaceable(GameObject newPlaceable = null)
+    public void SetCurrentPlaceable(GameObject newPlaceable)
     {
-        if (CurrentPlaceable == newPlaceable)
-        {
-            CurrentPlaceable = null;
-        }
-        else
-        {
-            CurrentPlaceable = newPlaceable;
-        }
+        CurrentPlaceable = newPlaceable;
+    }
+
+    public GameObject GetCurrentPlaceable()
+    {
+        return CurrentPlaceable;
     }
 }
