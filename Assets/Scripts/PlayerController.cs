@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCancelSelection()
+    {
+        _shop.SwitchSelection(-1);
+    }
+
     private void OnPointWorld(InputValue value)
     {
         Vector3 screenPos = value.Get<Vector2>();

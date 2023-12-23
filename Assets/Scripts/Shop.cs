@@ -54,7 +54,7 @@ public class Shop : MonoBehaviour
         }
     }
 
-    private void SwitchSelection(int ID)
+    public void SwitchSelection(int ID)
     {
         if (currentSelection != -1)
         {
