@@ -27,12 +27,13 @@ public class NavigationMap : MonoBehaviour
     {
         Vector3Int cellPos = _terrain.layoutGrid.WorldToCell(position);
         List<Vector3> neighbors = new List<Vector3>();
-        foreach (Vector3Int neighbor in _neighborVectors)
+        foreach (Vector3Int relativePos in _neighborVectors)
         {
-            CustomTile tile = _terrain.GetTile<CustomTile>(cellPos + neighbor);
+            Vector3Int neighborPos = cellPos + relativePos;
+            CustomTile tile = _terrain.GetTile<CustomTile>(neighborPos);
             if (tile != null && tile.IsWalkable)
             {
-                neighbors.Add(neighbor);
+                neighbors.Add(_terrain.layoutGrid.CellToWorld(neighborPos));
             }
         }
         return neighbors;
