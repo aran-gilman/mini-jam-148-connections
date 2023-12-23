@@ -25,6 +25,7 @@ public class AStarPathfinder : IPathfinder
     public void CalculatePath(Vector3 start, Vector3 target)
     {
         _path.Clear();
+        _target = target;
         if (_navMap == null)
         {
             return;
