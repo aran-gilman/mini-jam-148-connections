@@ -28,9 +28,8 @@ public class Connector : MonoBehaviour
     private LayerMask _connectorLayers;
 
     private Collider2D _rangeCollider;
-    private Dictionary<Connector, LineRenderer> _connectedObjects = new Dictionary<Connector, LineRenderer>();
-
-    private ContactFilter2D _connectorFilter;
+    private Dictionary<Connector, LineRenderer> _connectedObjects =
+        new Dictionary<Connector, LineRenderer>();
 
     /// <summary>
     /// Whether this Connector can still make more connections.
@@ -149,15 +148,14 @@ public class Connector : MonoBehaviour
         // so set the scale to double the range.
         go.transform.localScale = new Vector3(
             _connectionRange * 2.0f, _connectionRange * 2.0f, 1.0f);
-
-        _connectorFilter.SetLayerMask(_connectorLayers);
-        _connectorFilter.useTriggers = true;
     }
 
     private void OnEnable()
     {
-        List<Collider2D> neighbors = new List<Collider2D>();
-        _rangeCollider.OverlapCollider(_connectorFilter, neighbors);
+        List<Collider2D> neighbors = new List<Collider2D>(
+            Physics2D.OverlapPointAll(
+                transform.position,
+                _connectorLayers.value));
 
         IEnumerable<Connector> connections = neighbors
             .Select(c => c.GetComponentInParent<Connector>())
