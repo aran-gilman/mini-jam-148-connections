@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
-public class SelfHeal : MonoBehaviour
+public class RegenerationAbility : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("After taking damage, disable healing for X seconds.")]
