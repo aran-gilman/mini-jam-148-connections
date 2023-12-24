@@ -62,7 +62,7 @@ public class AStarPathfinder : IPathfinder
                     Position = target,
                     CameFrom = node
                 };
-                _path = BuildPath(targetNode);
+                ReconstructPath(targetNode);
                 return;
             }
             openNodes.Remove(node);
@@ -122,19 +122,12 @@ public class AStarPathfinder : IPathfinder
         return Vector3.Distance(current, _target);
     }
 
-    private Stack<Vector3> BuildPath(Node targetNode)
+    private void ReconstructPath(Node node)
     {
-        List<Vector3> path = new List<Vector3>();
-        ReconstructPath(targetNode, path);
-        return new Stack<Vector3>(path);
-    }
-
-    private void ReconstructPath(Node node, List<Vector3> path)
-    {
-        path.Add(node.Position);
+        _path.Push(node.Position);
         if (node.CameFrom != null)
         {
-            ReconstructPath(node.CameFrom, path);
+            ReconstructPath(node.CameFrom);
         }
     }
 }
