@@ -1,10 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Returns the hover info of the specified object. Useful for UIs that
-/// reference prefabs.
+/// Returns the hover info of the specified object.
 /// </summary>
-public class PassThroughHoverInfo : MonoBehaviour, IHoverInfo
+public class UIReferenceHoverInfo : MonoBehaviour, IHoverInfo
 {
     // We can't directly store IHoverInfo without a fair amount of custom
     // inspector code, so instead store a game object and retrieve the
