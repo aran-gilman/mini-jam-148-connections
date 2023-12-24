@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,11 +7,6 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    // TODO: We will probably want to convert this to a property to support
-    // callbacks when this changes, but leave it as a public variable for now
-    // to better support testing via the inspector.
-    private GameObject CurrentPlaceable;
-
     [SerializeField]
     private Grid _placementGrid;
 
@@ -25,20 +19,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Tilemap _terrain;
 
-    private Camera _mainCamera;
-    private Vector3 _currentPointerPosition;
-
-    private GameObject _positionPreviewObject;
-
     [SerializeField]
     private Shop _shop;
 
+    private Camera _mainCamera;
+
+    private Vector3 _currentPointerPosition;
+    private GameObject _positionPreviewObject;
+    private GameObject _currentPlaceable;
+
     private void OnPlaceStructure()
     {
-        if (CurrentPlaceable != null)
+        if (_currentPlaceable != null)
         {
             Vector3 position = _currentPointerPosition;
-            if (CurrentPlaceable.TryGetComponent(out Structure placeable))
+            if (_currentPlaceable.TryGetComponent(out Structure placeable))
             {
                 position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
 
@@ -56,7 +51,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             Instantiate(
-                CurrentPlaceable,
+                _currentPlaceable,
                 position,
                 Quaternion.identity);
             _shop.BuyItem();
@@ -127,11 +122,11 @@ public class PlayerController : MonoBehaviour
 
     public void SetCurrentPlaceable(GameObject newPlaceable)
     {
-        CurrentPlaceable = newPlaceable;
+        _currentPlaceable = newPlaceable;
     }
 
     public GameObject GetCurrentPlaceable()
     {
-        return CurrentPlaceable;
+        return _currentPlaceable;
     }
 }
