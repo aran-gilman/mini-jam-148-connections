@@ -6,6 +6,7 @@ public class Structure : MonoBehaviour
 {
     public delegate void StructureEventHandler(Structure newStructure);
     public static event StructureEventHandler StructureAdded;
+    public static event StructureEventHandler StructureRemoved;
 
     [SerializeField]
     [Tooltip("Size of the placeable in tiles.")]
@@ -55,5 +56,10 @@ public class Structure : MonoBehaviour
     private void OnEnable()
     {
         StructureAdded?.Invoke(this);
+    }
+
+    private void OnDisable()
+    {
+        StructureRemoved?.Invoke(this);
     }
 }

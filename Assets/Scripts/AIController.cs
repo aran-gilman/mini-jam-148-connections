@@ -7,7 +7,7 @@ public class AIController : MonoBehaviour
     private AIMovement _aiMovement;
     private ShootAbility _shootAbility;
 
-    private Health _target;
+    private Health _approachTarget;
 
     private Health FindTarget()
     {
@@ -33,10 +33,9 @@ public class AIController : MonoBehaviour
         return closestTarget;
     }
 
-    private void HandleStructureCreated(Structure structure)
+    private void ResetTarget(Structure structure)
     {
-        _target = FindTarget();
-        _aiMovement.TargetPosition = _target.transform.position;
+        _approachTarget = null;
     }
 
     private void Awake()
@@ -50,12 +49,14 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
-        Structure.StructureAdded += HandleStructureCreated;
+        Structure.StructureAdded += ResetTarget;
+        Structure.StructureRemoved += ResetTarget;
     }
 
     private void OnDisable()
     {
-        Structure.StructureAdded -= HandleStructureCreated;
+        Structure.StructureAdded -= ResetTarget;
+        Structure.StructureRemoved -= ResetTarget;
     }
 
     private void Update()
@@ -63,17 +64,17 @@ public class AIController : MonoBehaviour
         // If there is a target within range, attack it.
         if (_shootAbility.HasTargetsInRange())
         {
-            _target = null;
+            _approachTarget = null;
             _shootAbility.enabled = true;
             _aiMovement.enabled = false;
         }
         // Otherwise, if we are not moving toward a target, find one and start
         // moving toward it.
-        else if (_target == null)
+        else if (_approachTarget == null)
         {
-            _target = FindTarget();
+            _approachTarget = FindTarget();
             _aiMovement.enabled = true;
-            _aiMovement.TargetPosition = _target.transform.position;
+            _aiMovement.TargetPosition = _approachTarget.transform.position;
         }
     }
 }
