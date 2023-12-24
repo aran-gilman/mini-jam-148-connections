@@ -63,9 +63,9 @@ MonoBehaviour:
     Threshold: 6
   _pointsPerWave: 0100000002000000030000000400000005000000
   _initialDelay: 2
-  _waveDelay: 5
+  _waveDelay: 10
   _spawnCooldown: 1.5
-  _numberOfTypesSpawned: 3
+  _numberOfTypesSpawned: 2
 --- !u!212 &375429564351429413
 SpriteRenderer:
   m_ObjectHideFlags: 0

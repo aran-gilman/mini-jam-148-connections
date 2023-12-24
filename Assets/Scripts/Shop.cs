@@ -49,11 +49,8 @@ public class Shop : MonoBehaviour
             SwitchSelection(-1);
             return;
         }
-
-        if(Global.Money >= selectedItem.Cost)
-        {
-            SwitchSelection(buttonID);
-        }
+        
+        SwitchSelection(buttonID);
     }
 
     public void BuyItem(Vector3 position)
