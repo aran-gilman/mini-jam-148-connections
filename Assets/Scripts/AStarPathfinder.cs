@@ -37,7 +37,7 @@ public class AStarPathfinder : IPathfinder
         {
             Position = start,
             GScore = 0,
-            FScore = Heuristic(start)
+            FScore = Heuristic(start, target)
         };
         List<Node> openNodes = new List<Node>()
         {
@@ -82,7 +82,74 @@ public class AStarPathfinder : IPathfinder
                 {
                     neighbor.CameFrom = node;
                     neighbor.GScore = newGScore;
-                    neighbor.FScore = newGScore + Heuristic(neighborPos);
+                    neighbor.FScore = newGScore + Heuristic(neighborPos, target);
+                }
+            }
+        }
+        return new Stack<Vector3>();
+    }
+
+    public Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target)
+    {
+        // This is intended for a 2D game, so ignore the z-axis.
+        current.z = 0;
+        if (_navMap == null)
+        {
+            return new Stack<Vector3>();
+        }
+
+        Node startNode = new Node()
+        {
+            Position = current,
+            GScore = 0,
+            FScore = Heuristic(current, target.NearestPosition(current))
+        };
+        List<Node> openNodes = new List<Node>()
+        {
+            startNode
+        };
+        List<Node> allNodes = new List<Node>()
+        {
+            startNode
+        };
+
+        while (openNodes.Count > 0)
+        {
+            Node node = openNodes
+                .OrderBy(n => n.FScore)
+                .First();
+            Vector3 nearestTarget = target.NearestPosition(node.Position);
+            if (_navMap.HasDirectRoute(node.Position, nearestTarget))
+            {
+                Node targetNode = new Node()
+                {
+                    Position = nearestTarget,
+                    CameFrom = node
+                };
+                Stack<Vector3> path = new Stack<Vector3>();
+                ReconstructPath(targetNode, path);
+                return path;
+            }
+            openNodes.Remove(node);
+
+            foreach (Vector3 neighborPos in _navMap.GetNeighbors(node.Position))
+            {
+                Node neighbor = FindNode(neighborPos, allNodes);
+                if (neighbor == null)
+                {
+                    neighbor = new Node() { Position = neighborPos };
+                    allNodes.Add(neighbor);
+                    openNodes.Add(neighbor);
+                }
+
+                float newGScore = node.GScore +
+                    Vector3.Distance(node.Position, neighborPos);
+                if (newGScore < neighbor.GScore)
+                {
+                    neighbor.CameFrom = node;
+                    neighbor.GScore = newGScore;
+                    neighbor.FScore = newGScore
+                        + Heuristic(neighborPos, nearestTarget);
                 }
             }
         }
@@ -107,9 +174,9 @@ public class AStarPathfinder : IPathfinder
         return null;
     }
 
-    private float Heuristic(Vector3 current)
+    private float Heuristic(Vector3 current, Vector3 target)
     {
-        return Vector3.Distance(current, _target);
+        return Vector3.Distance(current, target);
     }
 
     private void ReconstructPath(Node node, Stack<Vector3> path)
@@ -119,10 +186,5 @@ public class AStarPathfinder : IPathfinder
         {
             ReconstructPath(node.CameFrom, path);
         }
-    }
-
-    public Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target)
-    {
-        throw new System.NotImplementedException();
     }
 }
