@@ -10,6 +10,14 @@ public class AIMovement : MonoBehaviour
     [Tooltip("How close the object needs to be for the algorithm to consider it as having reached the target position.")]
     private float _targetReachedTolerance = 0.1f;
 
+    private enum EMovementType
+    {
+        Walking,
+        Flying
+    }
+    [SerializeField]
+    private EMovementType _movementType;
+
     public Vector3 TargetPosition
     {
         get => _targetPosition;
@@ -30,8 +38,16 @@ public class AIMovement : MonoBehaviour
 
     private void Awake()
     {
-        _pathfinder = new AStarPathfinder(FindObjectOfType<NavigationMap>());
         _rb = GetComponent<Rigidbody2D>();
+        switch (_movementType)
+        {
+            case EMovementType.Walking:
+                _pathfinder = new AStarPathfinder(FindObjectOfType<NavigationMap>());
+                break;
+            case EMovementType.Flying:
+                _pathfinder = new NaivePathfinder();
+                break;
+        }
     }
 
     private void OnDisable()
