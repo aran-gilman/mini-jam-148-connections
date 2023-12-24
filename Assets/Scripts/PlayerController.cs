@@ -32,30 +32,32 @@ public class PlayerController : MonoBehaviour
 
     private void OnPlaceStructure()
     {
-        if (_currentPlaceable != null)
+        if (_currentPlaceable == null)
         {
-            Vector3 position = _currentPointerPosition - _positionOffset;
-            if (_currentPlaceable.TryGetComponent(out Structure placeable))
-            {
-                // Allow placement only if there is a Connector nearby.
-                if (Connector
-                    .GetAvailableConnectors(position, _connectorLayer)
-                    .Count() == 0)
-                {
-                    return;
-                }
-
-                if (IsBlocked(placeable))
-                {
-                    return;
-                }
-            }
-            Instantiate(
-                _currentPlaceable,
-                position,
-                Quaternion.identity);
-            _shop.BuyItem();
+            return;
         }
+
+        Vector3 position = _currentPointerPosition - _positionOffset;
+
+        // Allow placement only if there is a Connector nearby.
+        if (Connector
+            .GetAvailableConnectors(position, _connectorLayer)
+            .Count() == 0)
+        {
+            return;
+        }
+
+        if (_currentPlaceable.TryGetComponent(out Structure structure)
+            && IsBlocked(structure))
+        {
+            return;
+        }
+
+        Instantiate(
+            _currentPlaceable,
+            position,
+            Quaternion.identity);
+        _shop.BuyItem();
     }
 
     private void OnCancelSelection()
