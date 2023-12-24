@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class HoverInfo : MonoBehaviour
+public class ConstantHoverInfo : MonoBehaviour, IHoverInfo
 {
     [SerializeField]
     private string _displayName;
