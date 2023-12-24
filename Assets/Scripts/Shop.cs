@@ -17,6 +17,9 @@ public class Shop : MonoBehaviour
     [SerializeField]
     int _startingMoney;
 
+    [SerializeField]
+    private HoverInfoDisplay _infoDisplay;
+
     private int currentSelection = -1;
 
     private void Awake()
@@ -70,11 +73,14 @@ public class Shop : MonoBehaviour
         if (ID == -1)
         {
             PlayerController.SetCurrentPlaceable(null);
+            _infoDisplay.InfoSource = null;
         }
         else
         {
             PlayerController.SetCurrentPlaceable(_entries[ID].Structure);
             _entries[ID].RegularButton.SetActive(false);
+            _infoDisplay.InfoSource =
+                _entries[ID].Structure.GetComponentInChildren<IHoverInfo>();
         }
 
         currentSelection = ID;
