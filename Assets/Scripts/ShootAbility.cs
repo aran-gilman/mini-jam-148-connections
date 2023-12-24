@@ -19,10 +19,6 @@ public class ShootAbility : MonoBehaviour
     [Tooltip("Time in seconds between uses of this ability.")]
     private float _cooldown = 5.0f;
 
-    [SerializeField]
-    [Tooltip("Used by turrets to know if they should be able to shoot or not.")]
-    private Connector _connectorForTurrets;
-
     private float _currentRemainingCooldown = 0.0f;
 
     private List<Transform> _targetsInRange = new List<Transform>();
@@ -31,6 +27,8 @@ public class ShootAbility : MonoBehaviour
     private Health _selfHealth;
 
     private float _bulletSpeed = 5f;
+
+    private bool ShootingRestricted;
 
     public bool HasTargetsInRange()
     {
@@ -42,6 +40,11 @@ public class ShootAbility : MonoBehaviour
         return _targetsInRange
             .OrderBy(t => (transform.position - t.position).sqrMagnitude)
             .FirstOrDefault();
+    }
+
+    public void ChangeShootingRestriction(bool x)
+    {
+        ShootingRestricted = x;
     }
 
     private void Shoot(Transform target)
@@ -127,13 +130,8 @@ public class ShootAbility : MonoBehaviour
     {
         if (_currentRemainingCooldown <= 0.0f)
         {
-            bool canShoot = true;
-            if(_connectorForTurrets != null && _connectorForTurrets.NumberOfConnections() > 1)
-            {
-                canShoot = false;
-            }
             Transform target = FindTarget();
-            if (canShoot && target != null)
+            if (target != null && !ShootingRestricted)
             {
                 Shoot(target);
                 _currentRemainingCooldown = _cooldown;
