@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
                     return;
                 }
 
-                if (IsBlockedByTerrain(placeable))
+                if (IsBlocked(placeable))
                 {
                     return;
                 }
@@ -75,11 +77,13 @@ public class PlayerController : MonoBehaviour
         _positionPreviewObject.transform.position = _currentPointerPosition;
     }
 
-    private bool IsBlockedByTerrain(Structure placeable)
+    private bool IsBlocked(Structure placeable)
     {
         Vector3Int pivotCell = _placementGrid.WorldToCell(_currentPointerPosition);
-        foreach (Vector3Int placementCell in
-            placeable.GetContainedCells(pivotCell))
+        IEnumerable<Vector3Int> containedCells = placeable.GetContainedCells(pivotCell);
+
+        // First check whether placeable is blocked by the terrain.
+        foreach (Vector3Int placementCell in containedCells)
         {
             // For now, assume that the placement grid cells are
             // smaller than or equal in size to the terrain grid cells.
@@ -87,6 +91,19 @@ public class PlayerController : MonoBehaviour
             Vector3Int terrainCell = _terrain.layoutGrid.WorldToCell(worldPos);
             CustomTile tile = _terrain.GetTile<CustomTile>(terrainCell);
             if (tile == null || !tile.IsWalkable)
+            {
+                return true;
+            }
+        }
+
+        // If not blocked by the terrain, check for existing structures.
+        foreach (Structure other in FindObjectsOfType<Structure>())
+        {
+            Vector3Int otherPivot =
+                _placementGrid.WorldToCell(other.transform.position);
+            IEnumerable<Vector3Int> otherCells =
+                other.GetContainedCells(otherPivot);
+            if (otherCells.Intersect(containedCells).Count() > 0)
             {
                 return true;
             }
