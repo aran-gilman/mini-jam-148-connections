@@ -15,6 +15,8 @@ public class NaivePathfinder : IPathfinder
 
     public Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target)
     {
-        throw new System.NotImplementedException();
+        Stack<Vector3> path = new Stack<Vector3>();
+        path.Push(target.NearestPosition(current));
+        return path;
     }
 }
