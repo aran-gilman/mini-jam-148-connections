@@ -68,7 +68,7 @@ public class AIController : MonoBehaviour
         }
         // Otherwise, if we are not moving toward a target, find one and start
         // moving toward it.
-        else if (_aiMovement.HasTarget())
+        else if (!_aiMovement.HasTarget())
         {
             ApproachNearestTarget();
         }
