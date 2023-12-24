@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private HoverInfoDisplay _hoverInfoDisplay;
 
+    [SerializeField]
+    private LayerMask _hoverInfoLayer;
+
     private Camera _mainCamera;
 
     private Vector3 _currentPointerPosition;

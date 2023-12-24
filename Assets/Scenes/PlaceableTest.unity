@@ -5253,6 +5253,9 @@ MonoBehaviour:
   _battlefield: {fileID: 0}
   _winAndLose: {fileID: 0}
   _hoverInfoDisplay: {fileID: 1151655559}
+  _hoverInfoLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!156049354 &8648225845051710068
 Grid:
   m_ObjectHideFlags: 0
