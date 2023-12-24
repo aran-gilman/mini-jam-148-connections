@@ -47,6 +47,11 @@ public class PlayerController : MonoBehaviour
                 {
                     return;
                 }
+
+                if (IsBlockedByTerrain(placeable))
+                {
+                    return;
+                }
             }
             Instantiate(
                 CurrentPlaceable,
@@ -68,6 +73,25 @@ public class PlayerController : MonoBehaviour
         _currentPointerPosition.z = 0;
         _currentPointerPosition = SnapToGrid(_currentPointerPosition);
         _positionPreviewObject.transform.position = _currentPointerPosition;
+    }
+
+    private bool IsBlockedByTerrain(Placeable placeable)
+    {
+        Vector3Int pivotCell = _placementGrid.WorldToCell(_currentPointerPosition);
+        foreach (Vector3Int placementCell in
+            placeable.GetContainedCells(pivotCell))
+        {
+            // For now, assume that the placement grid cells are
+            // smaller than or equal in size to the terrain grid cells.
+            Vector3 worldPos = _placementGrid.CellToWorld(placementCell);
+            Vector3Int terrainCell = _terrain.layoutGrid.WorldToCell(worldPos);
+            CustomTile tile = _terrain.GetTile<CustomTile>(terrainCell);
+            if (tile == null || !tile.IsWalkable)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void Awake()

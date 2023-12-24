@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Placeable : MonoBehaviour
@@ -27,5 +28,19 @@ public class Placeable : MonoBehaviour
         }
 
         return new Vector3(pivotX, pivotY);
+    }
+
+    public IEnumerable<Vector3Int> GetContainedCells(Vector3Int pivotCell)
+    {
+        List<Vector3Int> containedCells = new List<Vector3Int>();
+        for (int y = 0; y < _size.y; ++y)
+        {
+            for (int x = 0; x < _size.x; ++x)
+            {
+                containedCells.Add(
+                    new Vector3Int(x + _pivot.x, y + _pivot.y) + pivotCell);
+            }
+        }
+        return containedCells;
     }
 }
