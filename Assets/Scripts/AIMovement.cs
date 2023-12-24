@@ -71,7 +71,10 @@ public class AIMovement : MonoBehaviour
         {
             _nextNode = _pathfinder.PopNextNode();
         }
-        _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
+
+        Vector3 diff = _nextNode - transform.position;
+        diff.z = 0;
+        _rb.velocity = (diff).normalized * _moveSpeed;
     }
 
     private static bool DidReachTarget(Vector3 a, Vector3 b, float epsilon)

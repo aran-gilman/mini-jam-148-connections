@@ -24,6 +24,10 @@ public class AStarPathfinder : IPathfinder
     // Derived from pseudocode at https://en.wikipedia.org/wiki/A*_search_algorithm
     public void CalculatePath(Vector3 start, Vector3 target)
     {
+        // This is intended for a 2D game, so ignore the z-axis.
+        start.z = 0;
+        target.z = 0;
+
         _path.Clear();
         _target = target;
         if (_navMap == null)
@@ -83,6 +87,7 @@ public class AStarPathfinder : IPathfinder
                 }
             }
         }
+        Debug.LogError($"Could not find path to target position {target}");
     }
 
     public Vector3 PopNextNode()
