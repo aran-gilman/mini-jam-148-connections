@@ -38,6 +38,13 @@ public class AIController : MonoBehaviour
         _approachTarget = null;
     }
 
+    private void ApproachNearestTarget()
+    {
+        _approachTarget = FindTarget();
+        _aiMovement.enabled = true;
+        _aiMovement.TargetPosition = _approachTarget.transform.position;
+    }
+
     private void Awake()
     {
         _aiMovement = GetComponent<AIMovement>();
@@ -72,9 +79,7 @@ public class AIController : MonoBehaviour
         // moving toward it.
         else if (_approachTarget == null)
         {
-            _approachTarget = FindTarget();
-            _aiMovement.enabled = true;
-            _aiMovement.TargetPosition = _approachTarget.transform.position;
+            ApproachNearestTarget();
         }
     }
 }
