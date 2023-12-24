@@ -4319,6 +4319,7 @@ MonoBehaviour:
     RegularButton: {fileID: 2061396927}
   MoneyText: {fileID: 822645056}
   PlayerController: {fileID: 8648225845051710067}
+  _startingMoney: 100
 --- !u!1 &1835468470
 GameObject:
   m_ObjectHideFlags: 0

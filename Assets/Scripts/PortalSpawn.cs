@@ -74,7 +74,7 @@ public class PortalSpawn : MonoBehaviour
             {
                 break;
             }
-            Instantiate(currentEntry.Enemy, transform.position, Quaternion.identity, null);
+            Instantiate(currentEntry.Enemy, transform.position, Quaternion.identity, transform.parent);
             points -= currentEntry.Cost;
             yield return new WaitForSeconds(_spawnCooldown);
         }

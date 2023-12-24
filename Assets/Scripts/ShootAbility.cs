@@ -43,7 +43,7 @@ public class ShootAbility : MonoBehaviour
     private void Shoot(Transform target)
     {
         GameObject bullet = Instantiate(
-            _bulletPrefab, transform.position, Quaternion.identity);
+            _bulletPrefab, transform.position, Quaternion.identity, transform.parent);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
         rb.velocity = (target.transform.position - bullet.transform.position).normalized * _bulletSpeed;

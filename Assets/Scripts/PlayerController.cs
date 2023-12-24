@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Shop _shop;
 
+    [SerializeField]
+    private Transform _battlefield;
+
+    [SerializeField]
+    private WinAndLose _winAndLose;
+
     private Camera _mainCamera;
 
     private Vector3 _currentPointerPosition;
@@ -56,7 +62,8 @@ public class PlayerController : MonoBehaviour
         Instantiate(
             _currentPlaceable,
             position,
-            Quaternion.identity);
+            Quaternion.identity,
+            _battlefield);
         _shop.BuyItem();
     }
 
@@ -72,6 +79,11 @@ public class PlayerController : MonoBehaviour
         _currentPointerPosition.z = 0;
         _currentPointerPosition = SnapToGrid(_currentPointerPosition);
         _previewObject.transform.position = _currentPointerPosition - _positionOffset;
+    }
+
+    private void OnContinueOrRestart()
+    {
+        _winAndLose.EndScene();
     }
 
     private bool IsBlocked(Structure placeable)
