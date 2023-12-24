@@ -20,6 +20,9 @@ public class Shop : MonoBehaviour
     [SerializeField]
     private HoverInfoDisplay _infoDisplay;
 
+    [SerializeField]
+    Transform _battlefield;
+
     private int currentSelection = -1;
 
     private void Awake()
@@ -53,14 +56,20 @@ public class Shop : MonoBehaviour
         }
     }
 
-    public void BuyItem()
+    public void BuyItem(Vector3 position)
     {
         int cost = _entries[currentSelection].Cost;
-        Global.Money -= cost;
-        if(Global.Money < cost)
+        if (Global.Money < cost)
         {
-            SwitchSelection(-1);
+            return;
         }
+        Global.Money -= cost;
+        Instantiate(
+            _entries[currentSelection].Structure,
+            position,
+            Quaternion.identity,
+            _battlefield);
+
     }
 
     public void SwitchSelection(int ID)

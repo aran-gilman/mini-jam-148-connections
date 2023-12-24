@@ -15361,6 +15361,7 @@ MonoBehaviour:
   PlayerController: {fileID: 1942393144}
   _startingMoney: 500
   _infoDisplay: {fileID: 1350946758}
+  _battlefield: {fileID: 1674795253}
 --- !u!114 &1706574785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15787,7 +15788,6 @@ MonoBehaviour:
     m_Bits: 64
   _terrain: {fileID: 1119641065}
   _shop: {fileID: 1706574784}
-  _battlefield: {fileID: 1674795253}
   _winAndLose: {fileID: 1766495834}
   _hoverInfoDisplay: {fileID: 1350946758}
   _hoverInfoLayer:

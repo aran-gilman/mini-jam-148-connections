@@ -23,9 +23,6 @@ public class PlayerController : MonoBehaviour
     private Shop _shop;
 
     [SerializeField]
-    private Transform _battlefield;
-
-    [SerializeField]
     private WinAndLose _winAndLose;
 
     [SerializeField]
@@ -65,12 +62,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Instantiate(
-            _currentPlaceable,
-            position,
-            Quaternion.identity,
-            _battlefield);
-        _shop.BuyItem();
+        _shop.BuyItem(position);
     }
 
     private void OnCancelSelection()
