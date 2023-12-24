@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Structure : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class Structure : MonoBehaviour
     [Tooltip("Which tile is the pivot, with (0, 0) to right and up from the center.")]
     private Vector2Int _pivot;
     public Vector2Int Pivot => _pivot;
+
+    [SerializeField]
+    private List<TileBase> _disallowedTerrain;
+    public List<TileBase> DisallowedTerrain => _disallowedTerrain;
 
     public Vector3 GetLocalPivotPosition(Vector3 cellSize)
     {

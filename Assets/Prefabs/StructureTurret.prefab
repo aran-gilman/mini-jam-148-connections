@@ -207,6 +207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _size: {x: 2, y: 2}
   _pivot: {x: -1, y: -1}
+  _disallowedTerrain:
+  - {fileID: 11400000, guid: 17a5760dd3a15b8439a193d8a4684e88, type: 2}
 --- !u!114 &7423014815433279782
 MonoBehaviour:
   m_ObjectHideFlags: 0

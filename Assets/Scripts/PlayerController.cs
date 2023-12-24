@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
             Vector3 worldPos = _placementGrid.CellToWorld(placementCell);
             Vector3Int terrainCell = _terrain.layoutGrid.WorldToCell(worldPos);
             CustomTile tile = _terrain.GetTile<CustomTile>(terrainCell);
-            if (tile == null || !tile.IsWalkable)
+            if (tile == null || placeable.DisallowedTerrain.Contains(tile))
             {
                 return true;
             }
