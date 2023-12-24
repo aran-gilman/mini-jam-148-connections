@@ -1076,7 +1076,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press anywhere to continue...
+  m_text: Press anywhere to return to menu...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15305,8 +15305,8 @@ MonoBehaviour:
   _loseScreen: {fileID: 1600001675}
   _playerInput: {fileID: 1942393145}
   nextLevel:
-    m_SceneAsset: {fileID: 102900000, guid: 2f7be6e65b810b649b3e90b7ebdf609e, type: 3}
-    m_SceneName: AbilityTest
+    m_SceneAsset: {fileID: 102900000, guid: 0a7a3914a78f9774ea980afa48f75ead, type: 3}
+    m_SceneName: Start Screen
 --- !u!4 &1766495835
 Transform:
   m_ObjectHideFlags: 0
