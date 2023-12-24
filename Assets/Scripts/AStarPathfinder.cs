@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AStarPathfinder : IPathfinder
 {
-    private Stack<Vector3> _path = new Stack<Vector3>();
     private NavigationMap _navMap;
     private Vector3 _target;
 
@@ -22,17 +21,16 @@ public class AStarPathfinder : IPathfinder
     }
 
     // Derived from pseudocode at https://en.wikipedia.org/wiki/A*_search_algorithm
-    public void CalculatePath(Vector3 start, Vector3 target)
+    public Stack<Vector3> CalculatePath(Vector3 start, Vector3 target)
     {
         // This is intended for a 2D game, so ignore the z-axis.
         start.z = 0;
         target.z = 0;
 
-        _path.Clear();
         _target = target;
         if (_navMap == null)
         {
-            return;
+            return new Stack<Vector3>();
         }
 
         Node startNode = new Node()
@@ -62,8 +60,9 @@ public class AStarPathfinder : IPathfinder
                     Position = target,
                     CameFrom = node
                 };
-                ReconstructPath(targetNode);
-                return;
+                Stack<Vector3> path = new Stack<Vector3>();
+                ReconstructPath(targetNode, path);
+                return path;
             }
             openNodes.Remove(node);
 
@@ -87,16 +86,7 @@ public class AStarPathfinder : IPathfinder
                 }
             }
         }
-        Debug.LogError($"Could not find path to target position {target}");
-    }
-
-    public Vector3 PopNextNode()
-    {
-        if (_path.TryPop(out Vector3 node))
-        {
-            return node;
-        }
-        return _target;
+        return new Stack<Vector3>();
     }
 
     private static bool VectorApproximately(Vector3 a, Vector3 b)
@@ -122,12 +112,12 @@ public class AStarPathfinder : IPathfinder
         return Vector3.Distance(current, _target);
     }
 
-    private void ReconstructPath(Node node)
+    private void ReconstructPath(Node node, Stack<Vector3> path)
     {
-        _path.Push(node.Position);
+        path.Push(node.Position);
         if (node.CameFrom != null)
         {
-            ReconstructPath(node.CameFrom);
+            ReconstructPath(node.CameFrom, path);
         }
     }
 }
