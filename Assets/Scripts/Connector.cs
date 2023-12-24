@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Assertions;
 
 public class Connector : MonoBehaviour
@@ -26,6 +27,14 @@ public class Connector : MonoBehaviour
     [SerializeField]
     [Tooltip("Layer(s) to check for other connector colliders.")]
     private LayerMask _connectorLayers;
+
+    [SerializeField]
+    private UnityEvent _notAnEdgePiece;
+    public UnityEvent NotAnEdgePiece => _notAnEdgePiece;
+
+    [SerializeField]
+    private UnityEvent _becameAnEdgePiece;
+    public UnityEvent BecameAnEdgePiece => _becameAnEdgePiece;
 
     // LineRenderers do not appear to respect the sorting order/sorting layers
     // for at least some other types of renderers (e.g. TilemapRenderer). The
@@ -77,6 +86,15 @@ public class Connector : MonoBehaviour
             line.SetPosition(
                 line.positionCount - 1, other.transform.position + _linePositionOffset);
         }
+
+        if (_connectedObjects.Count > 1)
+        {
+            _notAnEdgePiece.Invoke();
+        }
+        if (other._connectedObjects.Count > 1)
+        {
+            other._notAnEdgePiece.Invoke();
+        }
     }
 
     /// <summary>
@@ -97,6 +115,15 @@ public class Connector : MonoBehaviour
             {
                 Destroy(line.gameObject);
             }
+        }
+
+        if (_connectedObjects.Count <= 1)
+        {
+            _becameAnEdgePiece.Invoke();
+        }
+        if (other._connectedObjects.Count <= 1)
+        {
+            other._becameAnEdgePiece.Invoke();
         }
     }
 
@@ -152,6 +179,12 @@ public class Connector : MonoBehaviour
 
         return IsConnectedToSource(openNodes, visited);
     }
+
+    public int NumberOfConnections()
+    {
+        return _connectedObjects.Count;
+    }
+
 
     private void Awake()
     {

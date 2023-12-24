@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89917fd6ced07844db3817cc78c7a726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxConnections: 99
-  _connectionRange: 4
+  _maxConnections: 999
+  _connectionRange: 2.5
   _isSource: 1
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}
@@ -189,7 +189,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!50 &1069748170148628017
 Rigidbody2D:
@@ -385,14 +385,14 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -0.25, y: 0.5, z: 0}
-  - {x: 0.25, y: 0.5, z: 0}
-  - {x: 0.5, y: 0.25, z: 0}
-  - {x: 0.5, y: -0.25, z: 0}
-  - {x: 0.25, y: -0.5, z: 0}
-  - {x: -0.25, y: -0.5, z: 0}
-  - {x: -0.5, y: -0.25, z: 0}
-  - {x: -0.5, y: 0.25, z: 0}
+  - {x: -0.5, y: 1, z: 0}
+  - {x: 0.5, y: 1, z: 0}
+  - {x: 1, y: 0.5, z: 0}
+  - {x: 1, y: -0.5, z: 0}
+  - {x: 0.5, y: -1, z: 0}
+  - {x: -0.5, y: -1, z: 0}
+  - {x: -1, y: -0.5, z: 0}
+  - {x: -1, y: 0.5, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1

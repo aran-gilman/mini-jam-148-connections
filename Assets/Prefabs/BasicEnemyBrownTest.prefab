@@ -202,9 +202,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 0.5
-  _bulletPrefab: {fileID: 4605931904304323554, guid: b160bb7e469430640951e7b9f522ef4c, type: 3}
+  _bulletPrefab: {fileID: 4605931904304323554, guid: bfe1617ef6ca31f49886cbd5d9041718, type: 3}
   _shootRangePrefab: {fileID: 4204490069195673466, guid: e143bcc5a8ee7314d90b5a8117afaf7d, type: 3}
   _cooldown: 1
+  _connectorForTurrets: {fileID: 0}
 --- !u!114 &5534595078932856598
 MonoBehaviour:
   m_ObjectHideFlags: 0

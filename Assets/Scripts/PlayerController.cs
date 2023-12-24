@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _currentPointerPosition;
     private Vector3 _positionOffset;
     private GameObject _previewObject;
-    private SpriteRenderer _previewRenderer;
+    private LineRenderer _previewLines;
     private GameObject _currentPlaceable;
 
     private void OnPlaceStructure()
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
         // We cache this to avoid the cost of looking up the camera every time.
         _mainCamera = Camera.main;
         _previewObject = Instantiate(_positionPreviewPrefab, transform);
-        _previewRenderer = _previewObject.GetComponent<SpriteRenderer>();
+        _previewLines = _previewObject.GetComponent<LineRenderer>();
     }
 
     private Vector3 SnapToGrid(Vector3 worldPosition)
@@ -161,10 +161,17 @@ public class PlayerController : MonoBehaviour
     {
         _currentPlaceable = newPlaceable;
         if (_currentPlaceable != null
-            && _currentPlaceable.TryGetComponent(out SpriteRenderer placeableSprite))
+            && _currentPlaceable.TryGetComponent(out LineRenderer placeableLines))
         {
+            
+
             _previewObject.SetActive(true);
-            _previewRenderer.sprite = placeableSprite.sprite;
+
+
+            Vector3[] coordinatePositions = new Vector3[placeableLines.positionCount];
+            placeableLines.GetPositions(coordinatePositions);
+            _previewLines.positionCount = placeableLines.positionCount;
+            _previewLines.SetPositions(coordinatePositions);
 
             if (_currentPlaceable.TryGetComponent(out Structure structure))
             {

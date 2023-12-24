@@ -19,6 +19,10 @@ public class ShootAbility : MonoBehaviour
     [Tooltip("Time in seconds between uses of this ability.")]
     private float _cooldown = 5.0f;
 
+    [SerializeField]
+    [Tooltip("Used by turrets to know if they should be able to shoot or not.")]
+    private Connector _connectorForTurrets;
+
     private float _currentRemainingCooldown = 0.0f;
 
     private List<Transform> _targetsInRange = new List<Transform>();
@@ -42,11 +46,14 @@ public class ShootAbility : MonoBehaviour
 
     private void Shoot(Transform target)
     {
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+        Quaternion facing = Quaternion.FromToRotation(Vector3.up, direction);
+
         GameObject bullet = Instantiate(
-            _bulletPrefab, transform.position, Quaternion.identity, transform.parent);
+            _bulletPrefab, transform.position, facing, transform.parent);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
-        rb.velocity = (target.transform.position - bullet.transform.position).normalized * _bulletSpeed;
+        rb.velocity = direction * _bulletSpeed;
 
         if (_selfFactionAlignment != null &&
             bullet.TryGetComponent(out DamageInstance damageInstance))
@@ -120,8 +127,13 @@ public class ShootAbility : MonoBehaviour
     {
         if (_currentRemainingCooldown <= 0.0f)
         {
+            bool canShoot = true;
+            if(_connectorForTurrets != null && _connectorForTurrets.NumberOfConnections() > 1)
+            {
+                canShoot = false;
+            }
             Transform target = FindTarget();
-            if (target != null)
+            if (canShoot && target != null)
             {
                 Shoot(target);
                 _currentRemainingCooldown = _cooldown;
