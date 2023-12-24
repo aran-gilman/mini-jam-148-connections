@@ -33,6 +33,12 @@ public class AIController : MonoBehaviour
         return closestTarget;
     }
 
+    private void HandleStructureCreated(Structure structure)
+    {
+        _target = FindTarget();
+        _aiMovement.TargetPosition = _target.transform.position;
+    }
+
     private void Awake()
     {
         _aiMovement = GetComponent<AIMovement>();
@@ -40,6 +46,16 @@ public class AIController : MonoBehaviour
 
         _aiMovement.enabled = false;
         _shootAbility.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        Structure.StructureAdded += HandleStructureCreated;
+    }
+
+    private void OnDisable()
+    {
+        Structure.StructureAdded -= HandleStructureCreated;
     }
 
     private void Update()

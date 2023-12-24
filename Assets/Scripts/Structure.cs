@@ -4,6 +4,9 @@ using UnityEngine.Tilemaps;
 
 public class Structure : MonoBehaviour
 {
+    public delegate void StructureEventHandler(Structure newStructure);
+    public static event StructureEventHandler StructureAdded;
+
     [SerializeField]
     [Tooltip("Size of the placeable in tiles.")]
     private Vector2Int _size;
@@ -47,5 +50,10 @@ public class Structure : MonoBehaviour
             }
         }
         return containedCells;
+    }
+
+    private void OnEnable()
+    {
+        StructureAdded?.Invoke(this);
     }
 }
