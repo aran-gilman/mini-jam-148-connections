@@ -26,9 +26,10 @@ public class AIMovement : MonoBehaviour
             _targetPosition = value;
             _pathfinder.CalculatePath(transform.position, TargetPosition);
             _nextNode = _pathfinder.PopNextNode();
-            _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
         }
     }
+
+    public Vector3 NextNode => _nextNode;
 
     private Rigidbody2D _rb;
 
@@ -70,7 +71,10 @@ public class AIMovement : MonoBehaviour
         {
             _nextNode = _pathfinder.PopNextNode();
         }
-        _rb.velocity = (_nextNode - transform.position).normalized * _moveSpeed;
+
+        Vector3 diff = _nextNode - transform.position;
+        diff.z = 0;
+        _rb.velocity = (diff).normalized * _moveSpeed;
     }
 
     private static bool DidReachTarget(Vector3 a, Vector3 b, float epsilon)
