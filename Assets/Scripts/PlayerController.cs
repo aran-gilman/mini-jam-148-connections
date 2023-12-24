@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Camera _mainCamera;
 
     private Vector3 _currentPointerPosition;
+    private Vector3 _positionOffset;
     private GameObject _previewObject;
     private SpriteRenderer _previewRenderer;
     private GameObject _currentPlaceable;
@@ -33,11 +34,9 @@ public class PlayerController : MonoBehaviour
     {
         if (_currentPlaceable != null)
         {
-            Vector3 position = _currentPointerPosition;
+            Vector3 position = _currentPointerPosition - _positionOffset;
             if (_currentPlaceable.TryGetComponent(out Structure placeable))
             {
-                position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
-
                 // Allow placement only if there is a Connector nearby.
                 if (Connector
                     .GetAvailableConnectors(position, _connectorLayer)
@@ -70,7 +69,7 @@ public class PlayerController : MonoBehaviour
         _currentPointerPosition = _mainCamera.ScreenToWorldPoint(screenPos);
         _currentPointerPosition.z = 0;
         _currentPointerPosition = SnapToGrid(_currentPointerPosition);
-        _previewObject.transform.position = _currentPointerPosition;
+        _previewObject.transform.position = _currentPointerPosition - _positionOffset;
     }
 
     private bool IsBlocked(Structure placeable)
@@ -129,6 +128,16 @@ public class PlayerController : MonoBehaviour
         {
             _previewObject.SetActive(true);
             _previewRenderer.sprite = placeableSprite.sprite;
+
+            if (_currentPlaceable.TryGetComponent(out Structure structure))
+            {
+                _positionOffset =
+                    structure.GetLocalPivotPosition(_placementGrid.cellSize);
+            }
+            else
+            {
+                _positionOffset = Vector3.zero;
+            }
         }
         else
         {
