@@ -25,4 +25,9 @@ public class Health : MonoBehaviour
     {
         _currentHealth = _maxHealth;
     }
+
+    public void Profit(int x)
+    {
+        Global.Money += x;
+    }
 }

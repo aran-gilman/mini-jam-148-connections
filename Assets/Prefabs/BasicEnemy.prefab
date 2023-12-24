@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a673c41284ae548498543160256ed459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 0.5
+  _moveSpeed: 1
   _targetReachedTolerance: 0.1
 --- !u!114 &6620760358152534415
 MonoBehaviour:
@@ -234,6 +234,18 @@ MonoBehaviour:
   _healthDepleted:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 134399193071631748}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+        m_MethodName: Profit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1039025706152942865}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive

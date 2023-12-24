@@ -8,12 +8,14 @@ public class Shop : MonoBehaviour
     [SerializeField]
     private List<ShopEntry> _entries = new List<ShopEntry>();
 
-    private int _money = 1000;
     [SerializeField]
     private TextMeshProUGUI MoneyText;
 
     [SerializeField]
     PlayerController PlayerController;
+
+    [SerializeField]
+    int _startingMoney;
 
     private int currentSelection = -1;
 
@@ -24,7 +26,12 @@ public class Shop : MonoBehaviour
             _entries[i].PriceTag.text = _entries[i].Cost.ToString();
         }
 
-        MoneyText.text = _money.ToString();
+        Global.Money = _startingMoney;
+    }
+
+    private void Update()
+    {
+        MoneyText.text = Global.Money.ToString();
     }
 
     public void SelectItem(int buttonID)
@@ -37,7 +44,7 @@ public class Shop : MonoBehaviour
             return;
         }
 
-        if(_money >= selectedItem.Cost)
+        if(Global.Money >= selectedItem.Cost)
         {
             SwitchSelection(buttonID);
         }
@@ -46,9 +53,8 @@ public class Shop : MonoBehaviour
     public void BuyItem()
     {
         int cost = _entries[currentSelection].Cost;
-        _money -= cost;
-        MoneyText.text = _money.ToString();
-        if(_money < cost)
+        Global.Money -= cost;
+        if(Global.Money < cost)
         {
             SwitchSelection(-1);
         }

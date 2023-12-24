@@ -103,14 +103,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89917fd6ced07844db3817cc78c7a726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxConnections: 2
-  _connectionRange: 6
+  _maxConnections: 1
+  _connectionRange: 0.1
   _isSource: 0
   _rangePrefab: {fileID: 7189187325295448383, guid: 11de78acebc862947803d36add5c0771, type: 3}
   _linePrefab: {fileID: 4396135321590495766, guid: 6ed50427f35abfb448dfc80e43105d15, type: 3}
   _connectorLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!114 &8817741468547869393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +153,7 @@ MonoBehaviour:
   _range: 2.5
   _bulletPrefab: {fileID: 4605931904304323554, guid: b160bb7e469430640951e7b9f522ef4c, type: 3}
   _shootRangePrefab: {fileID: 4204490069195673466, guid: e143bcc5a8ee7314d90b5a8117afaf7d, type: 3}
-  _cooldown: 1
+  _cooldown: 0.6666667
 --- !u!114 &4253587010619655967
 MonoBehaviour:
   m_ObjectHideFlags: 0
