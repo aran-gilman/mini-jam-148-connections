@@ -1,6 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
@@ -19,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private LayerMask _connectorLayer;
 
+    [SerializeField]
+    private Tilemap _terrain;
+
     private Camera _mainCamera;
     private Vector3 _currentPointerPosition;
 
@@ -32,7 +38,7 @@ public class PlayerController : MonoBehaviour
         if (CurrentPlaceable != null)
         {
             Vector3 position = _currentPointerPosition;
-            if (CurrentPlaceable.TryGetComponent(out Placeable placeable))
+            if (CurrentPlaceable.TryGetComponent(out Structure placeable))
             {
                 position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
 
@@ -40,6 +46,11 @@ public class PlayerController : MonoBehaviour
                 if (Connector
                     .GetAvailableConnectors(position, _connectorLayer)
                     .Count() == 0)
+                {
+                    return;
+                }
+
+                if (IsBlocked(placeable))
                 {
                     return;
                 }
@@ -64,6 +75,40 @@ public class PlayerController : MonoBehaviour
         _currentPointerPosition.z = 0;
         _currentPointerPosition = SnapToGrid(_currentPointerPosition);
         _positionPreviewObject.transform.position = _currentPointerPosition;
+    }
+
+    private bool IsBlocked(Structure placeable)
+    {
+        Vector3Int pivotCell = _placementGrid.WorldToCell(_currentPointerPosition);
+        IEnumerable<Vector3Int> containedCells = placeable.GetContainedCells(pivotCell);
+
+        // First check whether placeable is blocked by the terrain.
+        foreach (Vector3Int placementCell in containedCells)
+        {
+            // For now, assume that the placement grid cells are
+            // smaller than or equal in size to the terrain grid cells.
+            Vector3 worldPos = _placementGrid.CellToWorld(placementCell);
+            Vector3Int terrainCell = _terrain.layoutGrid.WorldToCell(worldPos);
+            CustomTile tile = _terrain.GetTile<CustomTile>(terrainCell);
+            if (tile == null || !tile.IsWalkable)
+            {
+                return true;
+            }
+        }
+
+        // If not blocked by the terrain, check for existing structures.
+        foreach (Structure other in FindObjectsOfType<Structure>())
+        {
+            Vector3Int otherPivot =
+                _placementGrid.WorldToCell(other.transform.position);
+            IEnumerable<Vector3Int> otherCells =
+                other.GetContainedCells(otherPivot);
+            if (otherCells.Intersect(containedCells).Count() > 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void Awake()

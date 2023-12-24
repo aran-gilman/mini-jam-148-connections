@@ -27,6 +27,12 @@ public class Connector : MonoBehaviour
     [Tooltip("Layer(s) to check for other connector colliders.")]
     private LayerMask _connectorLayers;
 
+    // LineRenderers do not appear to respect the sorting order/sorting layers
+    // for at least some other types of renderers (e.g. TilemapRenderer). The
+    // easiest workaround is to assign them different z-coordinates.
+    private static readonly Vector3 _linePositionOffset =
+        new Vector3(0.0f, 0.0f, 0.1f);
+
     private Collider2D _rangeCollider;
     private Dictionary<Connector, LineRenderer> _connectedObjects =
         new Dictionary<Connector, LineRenderer>();
@@ -67,8 +73,9 @@ public class Connector : MonoBehaviour
             other._connectedObjects[this] = line;
 
             line.useWorldSpace = true;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(line.positionCount - 1, other.transform.position);
+            line.SetPosition(0, transform.position + _linePositionOffset);
+            line.SetPosition(
+                line.positionCount - 1, other.transform.position + _linePositionOffset);
         }
     }
 
