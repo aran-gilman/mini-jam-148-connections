@@ -13998,6 +13998,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6168723751851848030, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
+      propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168723751851848030, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: PortalDestroyed
       objectReference: {fileID: 0}
@@ -14011,11 +14015,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7370863927211180644, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 7370863927211180644, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7370863927211180644, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14382,7 +14386,7 @@ Transform:
   m_GameObject: {fileID: 1674795252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.4853954, y: 0.89866793, z: -5.8776007}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15130,11 +15134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4917352538707647637, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.5
+      value: -6.5
       objectReference: {fileID: 0}
     - target: {fileID: 4917352538707647637, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4917352538707647637, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15186,7 +15190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7501816689885051685, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Lose
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7501816689885051685, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
