@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
     private Camera _mainCamera;
 
     private Vector3 _currentPointerPosition;
-    private GameObject _positionPreviewObject;
+    private GameObject _previewObject;
+    private SpriteRenderer _previewRenderer;
     private GameObject _currentPlaceable;
 
     private void OnPlaceStructure()
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
         _currentPointerPosition = _mainCamera.ScreenToWorldPoint(screenPos);
         _currentPointerPosition.z = 0;
         _currentPointerPosition = SnapToGrid(_currentPointerPosition);
-        _positionPreviewObject.transform.position = _currentPointerPosition;
+        _previewObject.transform.position = _currentPointerPosition;
     }
 
     private bool IsBlocked(Structure placeable)
@@ -110,8 +111,8 @@ public class PlayerController : MonoBehaviour
     {
         // We cache this to avoid the cost of looking up the camera every time.
         _mainCamera = Camera.main;
-        _positionPreviewObject = Instantiate(_positionPreviewPrefab, transform);
-        _positionPreviewObject.transform.localScale = _placementGrid.cellSize;
+        _previewObject = Instantiate(_positionPreviewPrefab, transform);
+        _previewRenderer = _previewObject.GetComponent<SpriteRenderer>();
     }
 
     private Vector3 SnapToGrid(Vector3 worldPosition)
@@ -123,6 +124,16 @@ public class PlayerController : MonoBehaviour
     public void SetCurrentPlaceable(GameObject newPlaceable)
     {
         _currentPlaceable = newPlaceable;
+        if (_currentPlaceable != null
+            && _currentPlaceable.TryGetComponent(out SpriteRenderer placeableSprite))
+        {
+            _previewObject.SetActive(true);
+            _previewRenderer.sprite = placeableSprite.sprite;
+        }
+        else
+        {
+            _previewObject.SetActive(false);
+        }
     }
 
     public GameObject GetCurrentPlaceable()
