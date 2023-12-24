@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Placeable : MonoBehaviour
+public class Structure : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("Size of the placeable in tiles.")]

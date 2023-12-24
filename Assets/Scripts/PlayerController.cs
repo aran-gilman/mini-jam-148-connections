@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (CurrentPlaceable != null)
         {
             Vector3 position = _currentPointerPosition;
-            if (CurrentPlaceable.TryGetComponent(out Placeable placeable))
+            if (CurrentPlaceable.TryGetComponent(out Structure placeable))
             {
                 position -= placeable.GetLocalPivotPosition(_placementGrid.cellSize);
 
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         _positionPreviewObject.transform.position = _currentPointerPosition;
     }
 
-    private bool IsBlockedByTerrain(Placeable placeable)
+    private bool IsBlockedByTerrain(Structure placeable)
     {
         Vector3Int pivotCell = _placementGrid.WorldToCell(_currentPointerPosition);
         foreach (Vector3Int placementCell in
