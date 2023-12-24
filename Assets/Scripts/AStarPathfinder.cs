@@ -37,7 +37,7 @@ public class AStarPathfinder : IPathfinder
 
         Node startNode = new Node()
         {
-            Position = _navMap.GetNearestNode(start),
+            Position = start,
             GScore = 0,
             FScore = Heuristic(start)
         };
