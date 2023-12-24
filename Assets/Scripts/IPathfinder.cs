@@ -13,4 +13,6 @@ public interface IPathfinder
     /// Will be empty if target is unreachable.
     /// </returns>
     Stack<Vector3> CalculatePath(Vector3 current, Vector3 target);
+
+    Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target);
 }

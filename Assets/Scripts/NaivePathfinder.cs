@@ -12,4 +12,9 @@ public class NaivePathfinder : IPathfinder
         path.Push(target);
         return path;
     }
+
+    public Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -120,4 +120,9 @@ public class AStarPathfinder : IPathfinder
             ReconstructPath(node.CameFrom, path);
         }
     }
+
+    public Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target)
+    {
+        throw new System.NotImplementedException();
+    }
 }
