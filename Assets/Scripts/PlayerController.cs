@@ -82,19 +82,22 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 screenPos = value.Get<Vector2>();
         _currentPointerPosition = _mainCamera.ScreenToWorldPoint(screenPos);
-        Collider2D hoverInfoCollider =
-            Physics2D.OverlapPoint(_currentPointerPosition, _hoverInfoLayer.value);
-        if (hoverInfoCollider != null
-            && hoverInfoCollider.TryGetComponent(out IHoverInfo hoverInfo))
+        if (_currentPlaceable == null)
         {
-            if (hoverInfo != _hoverInfoDisplay.InfoSource)
+            Collider2D hoverInfoCollider =
+                Physics2D.OverlapPoint(_currentPointerPosition, _hoverInfoLayer.value);
+            if (hoverInfoCollider != null
+                && hoverInfoCollider.TryGetComponent(out IHoverInfo hoverInfo))
             {
-                _hoverInfoDisplay.InfoSource = hoverInfo;
+                if (hoverInfo != _hoverInfoDisplay.InfoSource)
+                {
+                    _hoverInfoDisplay.InfoSource = hoverInfo;
+                }
             }
-        }
-        else
-        {
-            _hoverInfoDisplay.InfoSource = null;
+            else
+            {
+                _hoverInfoDisplay.InfoSource = null;
+            }
         }
         _currentPointerPosition.z = 0;
         _currentPointerPosition = SnapToGrid(_currentPointerPosition);
