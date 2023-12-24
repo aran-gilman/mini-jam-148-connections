@@ -14758,7 +14758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6168723751851848030, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 6168723751851848030, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -14810,10 +14810,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7370863927211180644, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8685273228383334234, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
-      propertyPath: _faction
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -14944,7 +14940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6168723751851848030, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 6168723751851848030, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -14996,10 +14992,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7370863927211180644, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8685273228383334234, guid: 221f570a948742b45acdef32f9ccbd2e, type: 3}
-      propertyPath: _faction
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -15359,7 +15351,7 @@ MonoBehaviour:
     RegularButton: {fileID: 169999280}
   MoneyText: {fileID: 1973032919}
   PlayerController: {fileID: 1942393144}
-  _startingMoney: 500
+  _startingMoney: 50
   _infoDisplay: {fileID: 1350946758}
   _battlefield: {fileID: 1674795253}
 --- !u!114 &1706574785
@@ -16086,7 +16078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7501816689885051685, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: Lose
       objectReference: {fileID: 0}
     - target: {fileID: 7501816689885051685, guid: 3a0abacc8fc260443bc985831ebe161f, type: 3}
       propertyPath: _healthDepleted.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

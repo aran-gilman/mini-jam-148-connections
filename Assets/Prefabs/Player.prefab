@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3916145751070732334}
   - component: {fileID: 8520551901869933289}
   - component: {fileID: 7501816689885051685}
+  - component: {fileID: 4179060610908110426}
   - component: {fileID: 8405407749712707175}
   - component: {fileID: 4551184703020118604}
   - component: {fileID: 1069748170148628017}
@@ -140,6 +141,21 @@ MonoBehaviour:
   _healthDepleted:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4179060610908110426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248709035579651495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c77ec3a69dec584abd84964156c7122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageCooldown: 1.5
+  _healInterval: 1
+  _healAmount: 1
 --- !u!114 &8405407749712707175
 MonoBehaviour:
   m_ObjectHideFlags: 0
