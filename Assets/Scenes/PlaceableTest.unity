@@ -1358,6 +1358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameArea: {fileID: 2116131496}
+  _descriptionArea: {fileID: 0}
 --- !u!1 &1254226175
 GameObject:
   m_ObjectHideFlags: 0
@@ -5251,6 +5252,7 @@ MonoBehaviour:
   _shop: {fileID: 1736873367}
   _battlefield: {fileID: 0}
   _winAndLose: {fileID: 0}
+  _hoverInfoDisplay: {fileID: 1151655559}
 --- !u!156049354 &8648225845051710068
 Grid:
   m_ObjectHideFlags: 0

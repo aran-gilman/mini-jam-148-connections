@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private WinAndLose _winAndLose;
 
+    [SerializeField]
+    private HoverInfoDisplay _hoverInfoDisplay;
+
     private Camera _mainCamera;
 
     private Vector3 _currentPointerPosition;
