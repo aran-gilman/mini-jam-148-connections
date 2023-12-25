@@ -30,8 +30,15 @@ public class AIMovement : MonoBehaviour
 
     public void SetTarget(IPathfindingTarget target)
     {
-        _path = _pathfinder.CalculatePath(transform.position, target);
-        _path.TryPop(out _nextNode);
+        if (target == null)
+        {
+            _path.Clear();
+        }
+        else
+        {
+            _path = _pathfinder.CalculatePath(transform.position, target);
+            _path.TryPop(out _nextNode);
+        }
     }
 
     public bool HasTarget()
@@ -75,7 +82,6 @@ public class AIMovement : MonoBehaviour
                 _nextNode = transform.position;
                 _targetPosition = _nextNode;
             }
-            _nextNode = _path.Pop();
         }
 
         Vector3 diff = _nextNode - transform.position;
