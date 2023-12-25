@@ -25,7 +25,6 @@ public class AIMovement : MonoBehaviour
 
     private IPathfinder _pathfinder;
     private Vector3 _nextNode;
-    private Vector3 _targetPosition;
     private Stack<Vector3> _path = new Stack<Vector3>();
 
     public void SetTarget(IPathfindingTarget target)
@@ -64,7 +63,6 @@ public class AIMovement : MonoBehaviour
     {
         _rb.velocity = Vector3.zero;
         _nextNode = transform.position;
-        _targetPosition = transform.position;
     }
 
     private void Update()
@@ -80,7 +78,6 @@ public class AIMovement : MonoBehaviour
             if (!_path.TryPop(out _nextNode))
             {
                 _nextNode = transform.position;
-                _targetPosition = _nextNode;
             }
         }
 
