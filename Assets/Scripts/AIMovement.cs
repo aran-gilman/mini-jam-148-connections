@@ -25,6 +25,7 @@ public class AIMovement : MonoBehaviour
 
     private IPathfinder _pathfinder;
     private Vector3 _nextNode;
+    private bool _hasReachedTarget;
     private Stack<Vector3> _path = new Stack<Vector3>();
 
     public void SetTarget(IPathfindingTarget target)
@@ -32,17 +33,18 @@ public class AIMovement : MonoBehaviour
         if (target == null)
         {
             _path.Clear();
+            _hasReachedTarget = true;
         }
         else
         {
             _path = _pathfinder.CalculatePath(transform.position, target);
-            _path.TryPop(out _nextNode);
+            _hasReachedTarget = !_path.TryPop(out _nextNode);
         }
     }
 
     public bool HasTarget()
     {
-        return _path.Count > 0;
+        return !_hasReachedTarget;
     }
 
     private void Awake()
@@ -57,6 +59,7 @@ public class AIMovement : MonoBehaviour
                 _pathfinder = new NaivePathfinder();
                 break;
         }
+        _hasReachedTarget = true;
     }
 
     private void OnDisable()
@@ -78,6 +81,7 @@ public class AIMovement : MonoBehaviour
             if (!_path.TryPop(out _nextNode))
             {
                 _nextNode = transform.position;
+                _hasReachedTarget = true;
             }
         }
 
