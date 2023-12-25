@@ -1,8 +1,3 @@
-File(s): sfx_wpn_laser7.wav, sfx_exp_short_hard3.wav, sfx_exp_short_hard10.wav
-Author: Juhani Junkala (Subspace Audio)
-License: Public Domain CC0
-Link: https://opengameart.org/content/512-sound-effects-8-bit-style
-
 File(s): Decimeter-Stand_Alone_Complex_(Second_Gig_Remix).ogg
 Author: Gobusto
 License: CC-BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
