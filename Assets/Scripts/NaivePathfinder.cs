@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -5,15 +6,10 @@ using UnityEngine;
 /// </summary>
 public class NaivePathfinder : IPathfinder
 {
-    Vector3 _target = Vector3.zero;
-
-    public void CalculatePath(Vector3 current, Vector3 target)
+    public Stack<Vector3> CalculatePath(Vector3 current, IPathfindingTarget target)
     {
-        _target = target;
-    }
-
-    public Vector3 PopNextNode()
-    {
-        return _target;
+        Stack<Vector3> path = new Stack<Vector3>();
+        path.Push(target.NearestPosition(current));
+        return path;
     }
 }

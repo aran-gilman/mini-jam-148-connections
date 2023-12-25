@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -18,17 +19,6 @@ public class AIMovement : MonoBehaviour
     [SerializeField]
     private EMovementType _movementType;
 
-    public Vector3 TargetPosition
-    {
-        get => _targetPosition;
-        set
-        {
-            _targetPosition = value;
-            _pathfinder.CalculatePath(transform.position, TargetPosition);
-            _nextNode = _pathfinder.PopNextNode();
-        }
-    }
-
     public Vector3 NextNode => _nextNode;
 
     private Rigidbody2D _rb;
@@ -36,6 +26,25 @@ public class AIMovement : MonoBehaviour
     private IPathfinder _pathfinder;
     private Vector3 _nextNode;
     private Vector3 _targetPosition;
+    private Stack<Vector3> _path = new Stack<Vector3>();
+
+    public void SetTarget(IPathfindingTarget target)
+    {
+        if (target == null)
+        {
+            _path.Clear();
+        }
+        else
+        {
+            _path = _pathfinder.CalculatePath(transform.position, target);
+            _path.TryPop(out _nextNode);
+        }
+    }
+
+    public bool HasTarget()
+    {
+        return _path.Count > 0;
+    }
 
     private void Awake()
     {
@@ -60,8 +69,7 @@ public class AIMovement : MonoBehaviour
 
     private void Update()
     {
-        if (DidReachTarget(
-            transform.position, TargetPosition, _targetReachedTolerance))
+        if (!HasTarget())
         {
             _rb.velocity = Vector3.zero;
             return;
@@ -69,7 +77,11 @@ public class AIMovement : MonoBehaviour
 
         if (DidReachTarget(transform.position, _nextNode, _targetReachedTolerance))
         {
-            _nextNode = _pathfinder.PopNextNode();
+            if (!_path.TryPop(out _nextNode))
+            {
+                _nextNode = transform.position;
+                _targetPosition = _nextNode;
+            }
         }
 
         Vector3 diff = _nextNode - transform.position;
